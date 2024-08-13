@@ -1,0 +1,69 @@
+{
+    "path": "C:/projects/pfe/financial-advisor/services/data-collection/msedgedriver.exe",
+    "urls_usa": [
+      "https://finance.yahoo.com/screener/unsaved/4257583a-49ea-46b4-80d6-80baed2c1569?offset={i}&count=250",
+      "https://finance.yahoo.com/screener/unsaved/65050671-efbf-45f8-be77-efbf79d10e2c?offset={i}&count=250",
+      "https://finance.yahoo.com/screener/unsaved/adf0eb84-f488-4ac0-8b3c-fb5970f4be5d?offset={i}&count=250",
+      "https://finance.yahoo.com/screener/unsaved/e9b0f793-77c5-4b0b-a3f6-c3ee5e8a4004?offset={i}&count=250",
+      "https://finance.yahoo.com/screener/unsaved/26216aee-14b7-4346-bccc-7a5fe05ed386?offset={i}&count=250",
+      "https://finance.yahoo.com/screener/unsaved/1294886a-0061-4914-9690-0c42a6d06ebf?offset={i}&count=250"
+  ],
+    "urls_italy": [
+      "https://finance.yahoo.com/screener/unsaved/3e4cba10-43e0-444f-ad9c-17fb50ed6b61?offset={i}&count=250"
+    ],
+    "urls_germany": [
+      "https://finance.yahoo.com/screener/unsaved/160c2b7e-0ee7-48c3-8b36-580214b4ad56?offset={i}&count=250"
+    ],
+    "urls_france": [
+      "https://finance.yahoo.com/screener/unsaved/fe81eeab-26f8-401d-8f5f-c473b9885ed8?offset={i}&count=250"
+    ],
+    "urls_austria": [
+      "https://finance.yahoo.com/screener/unsaved/ebb90d91-2988-4d49-bf0b-712bb6183e56?offset={i}&count=250"
+    ],
+    "urls_china": [
+      "https://finance.yahoo.com/screener/unsaved/e693b703-dc51-44fc-b2cb-d211247ed07d?offset={i}&count=250"
+    ],
+    "urls_uk": [
+      "https://finance.yahoo.com/screener/unsaved/cbea230a-3994-4069-b5e0-9718273a6d12?offset={i}&count=250"
+    ],
+    "urls_india": [
+      "https://finance.yahoo.com/screener/unsaved/d42c5ae3-13f7-4f23-a491-bf39710debf8?offset={i}&count=250"
+    ],
+    "urls_australia": [
+      "https://finance.yahoo.com/screener/unsaved/1fed89e8-c1de-43fd-b993-482b7f6ef013?offset={i}&count=250"
+    ],
+    "urls_brazil": [
+      "https://finance.yahoo.com/screener/unsaved/88c9374a-b5c4-4aba-9dff-06ea8b65c995?offset={i}&count=250"
+    ],
+    "urls_canada": [
+      "https://finance.yahoo.com/screener/unsaved/6a9524f1-a1dc-4362-9747-2f5df173ec3d?offset={i}&count=250"
+    ],
+    "urls_japan": [
+      "https://finance.yahoo.com/screener/unsaved/a64b829c-a48c-4e2e-8c94-9fc3d4382c88?offset={i}&count=250"
+    ],
+    "urls_south_korea": [
+      "https://finance.yahoo.com/screener/unsaved/2445e948-b489-49e1-96cf-47908696ff10?offset={i}&count=250"
+    ],
+    "urls_malysia": [
+      "https://finance.yahoo.com/screener/unsaved/b40aa7ae-2425-40c2-b64c-47bfb99a93f2?offset={i}&count=250"
+    ],
+    "urls_netherlands": [
+      "https://finance.yahoo.com/screener/unsaved/2ff74182-823d-4fa8-800e-fdbadc23f8a7?offset={i}&count=250"
+    ],
+    "urls_sweden": [
+      "https://finance.yahoo.com/screener/unsaved/6984d904-157b-4e84-82c6-5039c1b681de?offset={i}&count=250"
+    ],
+    "urls_qatar": [
+      "https://finance.yahoo.com/screener/unsaved/77bf7a95-3deb-4ecd-937c-e7a153783ad8?offset={i}&count=250"
+    ],
+    "urls_saudi_arabia": [
+      "https://finance.yahoo.com/screener/unsaved/0dc35887-3522-448e-93db-53c56f802011?offset={i}&count=250"
+    ],
+    "urls_south_africa": [
+      "https://finance.yahoo.com/screener/unsaved/d4f7d155-aa5e-4f42-ace9-6d19692bcbe2?offset={i}&count=250"
+    ],
+    "urls_Egypt": [
+      "https://finance.yahoo.com/screener/unsaved/515e5fe2-062b-4202-b7c4-c726963bf7f0?offset={i}&count=250"
+    ],    
+    "table_xpath": "/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[6]/div/div/section/div/div[2]/div[1]/table"
+}
