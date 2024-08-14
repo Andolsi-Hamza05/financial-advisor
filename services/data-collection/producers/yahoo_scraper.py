@@ -19,8 +19,9 @@ logger = setup_logging()
 
 
 class YahooScraper(ABC):
-    def __init__(self, config_path: str):
+    def __init__(self, config_path: str = 'config.json'):
         self.config = self.load_config(config_path)
+        self.country = None
 
     @staticmethod
     def setup_driver(path: str, timeout: int = 10) -> webdriver.Edge:
@@ -163,9 +164,9 @@ class YahooScraper(ABC):
 
 
 class YahooScraperUSA(YahooScraper):
-    def __init__(self, config_path: str):
-        super().__init__(config_path)
-        self.country = 'USA'
+    def __init__(self, country: str):
+        super().__init__()
+        self.country = country
 
     def scrape(self) -> pd.DataFrame:
         """Scrape data for USA and return a DataFrame."""
@@ -174,23 +175,32 @@ class YahooScraperUSA(YahooScraper):
         return df_usa
 
 
-class YahooScraperItaly(YahooScraper):
-    def __init__(self, config_path: str):
-        super().__init__(config_path)
-        self.country = 'Italy'
+class YahooScraperBigCountries(YahooScraper):
+    def __init__(self, country: str):
+        super().__init__()
+        self.country = country
 
     def scrape(self) -> pd.DataFrame:
-        """Scrape data for Italy and return a DataFrame."""
-        italy_data = self.scrape_url_with_multiple_offsets(self.config['urls_italy'][0])
-        df_italy = self.create_dataframe(italy_data)
-        return df_italy
+        """Scrape data for specified country and return a DataFrame."""
+        data = self.scrape_url_with_multiple_offsets(self.config[f"urls_{self.country}"][0])
+        df = self.create_dataframe(data)
+        return df
+
+
+class YahooScraperFactory:
+    @staticmethod
+    def create_scraper(country: str) -> YahooScraper:
+        """Factory method to create the appropriate scraper based on the country."""
+        country = country.lower()
+        if country == 'usa':
+            return YahooScraperUSA(country)
+        elif country in ['france', 'germany', 'italy']:
+            return YahooScraperBigCountries(country)
+        else:
+            raise ValueError(f"No scraper available for the specified country: {country}")
 
 
 if __name__ == "__main__":
-    usa_scraper = YahooScraperUSA('config.json')
-    df_usa = usa_scraper.scrape()
-    logger.info(f"df_usa with shape {df_usa.shape}")
-
-    italy_scraper = YahooScraperItaly('config.json')
-    df_italy = italy_scraper.scrape()
-    logger.info(f"df_italy with shape {df_italy.shape}")
+    scraper = YahooScraperFactory.create_scraper('Germany')
+    data = scraper.scrape()
+    print(data.head())
