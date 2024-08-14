@@ -44,7 +44,7 @@
     "urls_south_korea": [
       "https://finance.yahoo.com/screener/unsaved/2445e948-b489-49e1-96cf-47908696ff10?offset={i}&count=250"
     ],
-    "urls_malysia": [
+    "urls_malaysia": [
       "https://finance.yahoo.com/screener/unsaved/b40aa7ae-2425-40c2-b64c-47bfb99a93f2?offset={i}&count=250"
     ],
     "urls_netherlands": [
@@ -62,7 +62,7 @@
     "urls_south_africa": [
       "https://finance.yahoo.com/screener/unsaved/d4f7d155-aa5e-4f42-ace9-6d19692bcbe2?offset={i}&count=250"
     ],
-    "urls_Egypt": [
+    "urls_egypt": [
       "https://finance.yahoo.com/screener/unsaved/515e5fe2-062b-4202-b7c4-c726963bf7f0?offset={i}&count=250"
     ],    
     "table_xpath": "/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[6]/div/div/section/div/div[2]/div[1]/table",

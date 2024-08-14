@@ -101,7 +101,7 @@ class YahooScraper(ABC):
         finally:
             driver.quit()
 
-    def scrape_url_in_parallel(self, url, max_iteration=10, initial=0):
+    def scrape_url_in_parallel(self, url, initial, max_iteration):
         """Scrape data in parallel with multiple offsets."""
         driver = self.setup_driver(self.config['path'])
         wait = WebDriverWait(driver, 1)
@@ -138,12 +138,12 @@ class YahooScraper(ABC):
                 all_data.extend(future.result())
         return all_data
 
-    def scrape_url_with_multiple_offsets(self, url: str, max_iteration: int = 5, initial_offsets: list = [0, 1250, 2500, 3750, 5000, 6250, 7500, 8750]) -> list:
+    def scrape_url_with_multiple_offsets(self, url: str, initial_offsets: list, max_iteration: int = 5) -> list:
         """Scrape a single URL in parallel with different initial offsets."""
 
         all_data = []
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            futures = [executor.submit(self.scrape_url_in_parallel, url, max_iteration, initial) for initial in initial_offsets]
+            futures = [executor.submit(self.scrape_url_in_parallel, url, initial, max_iteration) for initial in initial_offsets]
             for future in concurrent.futures.as_completed(futures):
                 all_data.extend(future.result())
 
@@ -179,10 +179,53 @@ class YahooScraperBigCountries(YahooScraper):
     def __init__(self, country: str):
         super().__init__()
         self.country = country
+        self.initial_offsets = [0, 1250, 2500, 3750, 5000, 6250, 7500, 8750]
 
     def scrape(self) -> pd.DataFrame:
         """Scrape data for specified country and return a DataFrame."""
-        data = self.scrape_url_with_multiple_offsets(self.config[f"urls_{self.country}"][0])
+        data = self.scrape_url_with_multiple_offsets(self.config[f"urls_{self.country}"][0], self.initial_offsets)
+        df = self.create_dataframe(data)
+        return df
+
+
+class YahooScraperMediumCountries(YahooScraper):
+    def __init__(self, country: str):
+        super().__init__()
+        self.country = country
+        self.initial_offsets = [0, 1000, 2000, 3000, 4000, 5000, 6000, 7000]
+        self.max_iteration = self.initial_offsets[1]//250
+
+    def scrape(self) -> pd.DataFrame:
+        """Scrape data for specified country and return a DataFrame."""
+        data = self.scrape_url_with_multiple_offsets(self.config[f"urls_{self.country}"][0], self.initial_offsets, self.max_iteration)
+        df = self.create_dataframe(data)
+        return df
+
+
+class YahooScraperSmallCountries(YahooScraper):
+    def __init__(self, country: str):
+        super().__init__()
+        self.country = country
+        self.initial_offsets = [0, 1000, 2000, 3000]
+        self.max_iteration = self.initial_offsets[1]//250
+
+    def scrape(self) -> pd.DataFrame:
+        """Scrape data for specified country and return a DataFrame."""
+        data = self.scrape_url_with_multiple_offsets(self.config[f"urls_{self.country}"][0], self.initial_offsets, self.max_iteration)
+        df = self.create_dataframe(data)
+        return df
+
+
+class YahooScraperOtherCountries(YahooScraper):
+    def __init__(self, country: str):
+        super().__init__()
+        self.country = country
+        self.initial_offsets = [0, 250, 500]
+        self.max_iteration = self.initial_offsets[1]//250
+
+    def scrape(self) -> pd.DataFrame:
+        """Scrape data for specified country and return a DataFrame."""
+        data = self.scrape_url_with_multiple_offsets(self.config[f"urls_{self.country}"][0], self.initial_offsets, self.max_iteration)
         df = self.create_dataframe(data)
         return df
 
@@ -191,16 +234,28 @@ class YahooScraperFactory:
     @staticmethod
     def create_scraper(country: str) -> YahooScraper:
         """Factory method to create the appropriate scraper based on the country."""
+        BigCountries = ['france', 'germany', 'italy']
+        MediumCountries = ['austria', 'china', 'uk', 'india']
+        SmallCountries = ['australia', 'brazil', 'canada', 'japan', 'south_korea', 'malaysia', 'netherlands', 'sweden']
+        OtherCountries = ['egypt', 'qatar', 'saudi_arabia', 'south_africa']
         country = country.lower()
         if country == 'usa':
             return YahooScraperUSA(country)
-        elif country in ['france', 'germany', 'italy']:
+        elif country in BigCountries:
             return YahooScraperBigCountries(country)
+        elif country in MediumCountries:
+            return YahooScraperMediumCountries(country)
+        elif country in SmallCountries:
+            return YahooScraperSmallCountries(country)
+        elif country in OtherCountries:
+            return YahooScraperOtherCountries(country)
         else:
-            raise ValueError(f"No scraper available for the specified country: {country}")
+            raise ValueError(f"No scraper available for the specified country: {country} \n"
+                             f"Available countries are :{['usa']+BigCountries+MediumCountries+SmallCountries+OtherCountries}")
 
 
 if __name__ == "__main__":
-    scraper = YahooScraperFactory.create_scraper('Germany')
-    data = scraper.scrape()
-    print(data.head())
+    scraper = YahooScraperFactory.create_scraper('egypt')
+    if scraper is not None:
+        data = scraper.scrape()
+        print(data.head())
