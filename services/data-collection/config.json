@@ -1,0 +1,47 @@
+{
+    "path": "C:/projects/pfe/financial-advisor/services/data-collection/msedgedriver.exe",
+    "heavy_sector_options": {
+      "Materials":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[4]/div/div[1]/div[2]/div/div/div[2]/div/div[2]/ul/li[1]/label/input",
+      "Finance":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[4]/div/div[1]/div[2]/div/div/div[2]/div/div[2]/ul/li[3]/label/input",
+      "Technology":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[4]/div/div[1]/div[2]/div/div/div[2]/div/div[2]/ul/li[11]/label/input",
+      "Healthcare":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[4]/div/div[1]/div[2]/div/div/div[2]/div/div[2]/ul/li[6]/label/input",
+      "Industrials":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[4]/div/div[1]/div[2]/div/div/div[2]/div/div[2]/ul/li[10]/label/input"
+},  
+    "light_sector_options": {
+      "Consumer Defensive":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[4]/div/div[1]/div[2]/div/div/div[2]/div/div[2]/ul/li[5]/label/input",
+      "Utilities":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[4]/div/div[1]/div[2]/div/div/div[2]/div/div[2]/ul/li[7]/label/input",
+      "Energy":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[4]/div/div[1]/div[2]/div/div/div[2]/div/div[2]/ul/li[9]/label/input",
+      "Consumer Cyclical":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[4]/div/div[1]/div[2]/div/div/div[2]/div/div[2]/ul/li[2]/label/input",
+      "Real Estate":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[4]/div/div[1]/div[2]/div/div/div[2]/div/div[2]/ul/li[4]/label/input",
+      "Communication Services":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[4]/div/div[1]/div[2]/div/div/div[2]/div/div[2]/ul/li[8]/label/input"
+    },
+
+    "submit_button": "/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[3]/button[1]",
+    "table_xpath": "/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[6]/div/div/section/div/div[2]/div[1]/table",
+    "table_verify_content": "/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[6]/div/div/section/div/div[2]/div[1]/table/tbody/tr[1]",
+    "add_sector_button": "/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[4]/div/div[1]/div[2]/ul/li/button",
+    "add_region_xpath": "/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/ul/li/button",
+
+    "country_xpath": {
+      "usa":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/ul/li[1]/button",
+      "italy":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/ul/li[27]/label/input",
+      "germany":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/ul/li[11]/label/input",
+      "france":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/ul/li[17]/label/input",
+      "austria":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/ul/li[2]/label/input",
+      "china":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/ul/li[9]/label/input",
+      "uk":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/ul/li[18]/label/input",
+      "india":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/ul/li[25]/label/input",
+      "australia":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/ul/li[3]/label/input",
+      "brazil":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/ul/li[5]/label/input",
+      "canada":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/ul/li[6]/label/input",
+      "japan":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/ul/li[28]/label/input",
+      "south_korea":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/ul/li[29]/label/input",
+      "malaysia":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/ul/li[35]/label/input",
+      "netherlands":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/ul/li[36]/label/input",
+      "sweden":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/ul/li[47]/label/input",
+      "qatar":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/ul/li[44]/label/input",
+      "saudi_arabia":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/ul/li[46]/label/input",
+      "south_africa":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/ul/li[56]/label/input",
+      "egypt":"/html/body/div[1]/div/div/div[1]/div/div[2]/div/div/div[5]/div/div/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/ul/li[14]/label/input"
+    }
+}
