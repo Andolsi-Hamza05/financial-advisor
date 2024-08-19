@@ -362,6 +362,6 @@ class YahooScraperFactory:
 
 
 if __name__ == "__main__":
-    scraper = YahooScraperFactory.create_scraper('egypt')
+    scraper = YahooScraperFactory.create_scraper('usa')
     data = scraper.scrape()
     print(data.head())
