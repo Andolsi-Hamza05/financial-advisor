@@ -4,10 +4,13 @@ from datetime import datetime
 
 
 def setup_logging(level=logging.INFO) -> logging.Logger:
-    """Setup logging configuration to save logs in a 'loggings' directory."""
+    """Setup logging configuration to save logs in a 'loggings' directory under a script-specific subfolder."""
 
-    # Create the 'loggings' directory if it doesn't exist
-    log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'loggings')
+    # Get the script filename without the extension
+    script_name = os.path.splitext(os.path.basename(__file__))[0]
+
+    # Create the 'loggings' directory and a subfolder named after the script
+    log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'loggings', script_name)
     os.makedirs(log_dir, exist_ok=True)
 
     # Create a log file with a timestamp
