@@ -20,7 +20,7 @@ logger = setup_logging()
 
 
 class YahooScraper(ABC):
-    def __init__(self, config_path: str = 'config_sector.json'):
+    def __init__(self, config_path: str = 'config_stock.json'):
         self.config = self.load_config(config_path)
         self.country = None
 
