@@ -113,15 +113,16 @@ class ETFScraper:
         existing_names = set()
 
         self.driver.get(self.config['url'][self.management])
-        self.select_show_50()
         time.sleep(5)
+        self.select_show_50()
+        time.sleep(3)
 
         if tab_xpath:
             self.click_tab(tab_xpath)
         self.logger.info(f"Scraping the tab {index}")
 
         i = 1
-        while i < 5:
+        while i < 50:
             data = self.extract_data_from_page(self.config['xpaths'], page['column_names'])
 
             for row in data:
