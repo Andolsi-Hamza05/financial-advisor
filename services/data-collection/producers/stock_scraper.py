@@ -49,7 +49,7 @@ class YahooScraper(ABC):
             edge_options.add_argument("--window-size=1920,1080")
             edge_options.add_argument('--blink-settings=imagesEnabled=false')
 
-            edge_options.add_argument("--log-level=3")  # Disable logs
+            edge_options.add_argument("--log-level=3")
             service = Service(os.path.abspath(self.config['driver_path']))
             driver = webdriver.Edge(service=service, options=edge_options)
             driver.implicitly_wait(timeout)
@@ -179,7 +179,6 @@ class YahooScraper(ABC):
         except Exception as e:
             logger.error(f"Failed to interact with web page for sector {sector_option}: {e}")
 
-            # Continue execution even after an error and return the current URL
             generated_url = driver.current_url + "?offset={i}&count=250"
 
             logger.warning(f"Returning URL after error: {generated_url}")

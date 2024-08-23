@@ -1,6 +1,7 @@
 {
-    "Bond Funds":
+    "driver_path": "./config/msedgedriver.exe",
 
+    "Bond_Funds":
     {
         "Core Bond Funds":"https://www.morningstar.com/best-investments/core-bond-funds",
         "Corporate Bond Funds":"https://www.morningstar.com/best-investments/corporate-bond-funds",
@@ -10,21 +11,23 @@
         "Long-Term National Municipal Bond Funds":"https://www.morningstar.com/best-investments/long-term-national-municipal-bond-funds",
         "Inflation-Protected Bond Funds":"https://www.morningstar.com/best-investments/inflation-protected-bond-funds"
     },
+    "Bond_Funds_Columns":["Medalist Rating", "SEC 30-Day Yield", "TTM Yield", "Average Effective Duration", "Total Return 1 year", "Total Return 3 year", "Adjusted Expense Ratio", "Asset Under Management (Fund Size)"],
 
-    "Equity Funds":
+    "Equity_Funds":
     {
 
-        "US Equity Funds":
+        "US Equity":
 
         {
-            "Index Funds":
+            "Index_Funds":
             {
                 "US Large Cap Index Funds":"https://www.morningstar.com/best-investments/us-large-cap-index-funds",
                 "US Small/Mid-Cap Index Funds":"https://www.morningstar.com/best-investments/us-small-mid-cap-index-funds",
                 "US Growth Index Funds":"https://www.morningstar.com/best-investments/us-growth-index-funds",
                 "US Value Index Funds":"https://www.morningstar.com/best-investments/us-value-index-funds"
             },
-            "Actively Managed Funds":
+            "Index_Funds_Columns":["Morningstar Category", "Medalist Rating", "Morningstar Rating for Funds", "Total Return(1 year)", "Total Return(3 year)", "Total Return(5 years)", "Adjusted Expense Ratio", "Fund size(AUM)"],
+            "Actively_Managed_Funds":
             {
                 "Actively Managed US Large Cap Funds":"https://www.morningstar.com/best-investments/actively-managed-us-large-cap-funds",
                 "Actively Managed US Small/Mid-Cap Funds":"https://www.morningstar.com/best-investments/actively-managed-us-small-mid-cap-funds",
@@ -32,7 +35,8 @@
                 "Actively Managed US Value Funds":"https://www.morningstar.com/best-investments/actively-managed-us-value-funds",
                 "Long-Short Equity Funds(Hedge)":"https://www.morningstar.com/best-investments/long-short-equity-funds"
             },
-            "Sector Equity":
+            "Actively_Managed_Funds_Columns":["Morningstar Category", "Medalist Rating", "Morningstar Rating for Funds", "Total Return(1 year)", "Total Return(3 year)", "Total Return(5 years)", "Adjusted Expense Ratio", "Fund size(AUM)"],
+            "Sector_Equity":
             {
                 "Basic Material":"https://www.morningstar.com/best-investments/basic-material-funds",
                 "Communication Services":"https://www.morningstar.com/best-investments/communication-services-funds",
@@ -46,6 +50,7 @@
                 "Technology":"https://www.morningstar.com/best-investments/technology-funds",
                 "Utilities":"https://www.morningstar.com/best-investments/utility-funds"
             },
+            "Sector_Equity_Columns":["Morningstar Rating for Funds", "Medalist Rating", "Adjusted Expense Ratio", "Total Return(1 year)", "Total Return(3 year)", "Total Return(5 years)", "Fund size(AUM)"],
             "Thematic":
             {
                 "AI and Big Data":"https://www.morningstar.com/best-investments/ai-big-data-funds",
@@ -55,22 +60,25 @@
                 "Energy Transition":"https://www.morningstar.com/best-investments/energy-transition-funds",
                 "Fintech":"https://www.morningstar.com/best-investments/fintech-funds",
                 "Water":"https://www.morningstar.com/best-investments/water-funds"
-            }
+            },
+            "Thematic_Columns":["Medalist Rating", "Total Return(1 year)", "Total Return(3 year)", "Morningstar Return Rating", "Morningstar Risk Rating", "Adjusted Expense Ratio", "Fund size(AUM)"]
         },
 
-        "International Equity":
+        "International_Equity":
         {
             "Global/Diversified International Funds":"https://www.morningstar.com/best-investments/global-diversified-international-funds",
             "Large-Cap International Funds":"https://www.morningstar.com/best-investments/large-cap-international-funds",
             "Small/Mid Cap International Funds":"https://www.morningstar.com/best-investments/small-mid-cap-international-funds",
             "Emerging Markets":"https://www.morningstar.com/best-investments/emerging-markets-funds",
             "International Index":"https://www.morningstar.com/best-investments/international-index-funds"
-        }
+        },
+        "International_Equity_Columns":["Medalist Rating", "Morningstar Rating for Funds", "Total Return(1 year)", "Total Return(3 year)", "Total Return(5 years)", "Adjusted Expense Ratio", "Fund size(AUM)"]
     },
 
-    "Alternative Funds":
+    "Alternative_Funds":
     {
         "Commodity":"https://www.morningstar.com/best-investments/commodity-funds",
         "Digital Asset":"https://www.morningstar.com/best-investments/digital-asset-funds"
-    }
+    },
+    "Alternative_Funds_Columns":["Medalist Rating", "Morningstar Rating for Funds", "Total Return(1 year)", "Total Return(3 year)", "Total Return(5 years)", "Adjusted Expense Ratio", "Fund size(AUM)"]
 }
