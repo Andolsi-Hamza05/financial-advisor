@@ -21,9 +21,8 @@ logger = setup_logging()
 class MutualFundScraper:
     def __init__(self, type_fund: str):
         self.logger = setup_logging()
-        self.config = self.load_config('config/config_mutual_funds.json')
+        self.config = self.load_config('./config/config_mutual_funds.json')
         self.type_fund = type_fund
-        self.driver_path = os.path.abspath(self.config['driver_path'])
         self.driver = self.setup_driver()
         self.wait = WebDriverWait(self.driver, 60)
 
@@ -52,7 +51,10 @@ class MutualFundScraper:
         edge_options.add_argument('--blink-settings=imagesEnabled=false')
         edge_options.add_argument("--log-level=3")  # Disable logs
 
-        service = Service(self.driver_path)
+        if os.name == 'nt':
+            service = Service(os.path.abspath(self.config['driver_path'])+".exe")
+        else:
+            service = Service(os.path.abspath(self.config['driver_path']))
         driver = webdriver.Edge(service=service, options=edge_options)
         driver.implicitly_wait(30)
         logger.info("WebDriver initialized successfully.")
@@ -65,8 +67,8 @@ class MutualFundScraper:
             symbol = row.find('th').find('div').text.strip()
             columns = row.find_all('td')
             d = {
-                'Name': name,
-                'Symbol': symbol
+                'name': name,
+                'symbol': symbol
                 }
             i = 0
             for column_name in columns_names:
@@ -135,7 +137,8 @@ class MutualFundScraper:
         for category, url in dict_urls.items():
             logger.info(f"Scraping {category}")
             data = self.scrape_all_pages(url, columns_names)
-            data["Category"] = category
+            data["category"] = category
+            data["fund_type"] = self.type_fund
             all_data.append(data)
         combined_df = pd.concat(all_data, ignore_index=True)
         return combined_df
@@ -143,22 +146,20 @@ class MutualFundScraper:
     def scrape(self):
         if self.type_fund == "Bond_Funds":
             df = self.scrape_dict_urls(self.config[self.type_fund], self.config["Bond_Funds_Columns"])
-            df["Fund type"] = self.type_fund
-            df.to_csv(f"data/{self.type_fund}.csv")
+            df.to_json(f"data/{self.type_fund}.json")
+            jdata = df.to_json()
+            return jdata
         elif self.type_fund == "Equity_Funds":
             for category in ["Index_Funds", "Actively_Managed_Funds", "Sector_Equity", "Thematic"]:
                 df = self.scrape_dict_urls(self.config[self.type_fund]["US Equity"][category], self.config[self.type_fund]["US Equity"][category+"_Columns"])
-                df["Fund type"] = self.type_fund
-                df["Region"] = "US Equity"
+                df["region"] = "US Equity"
                 df["Funds repartition Strategy"] = category
                 df.to_csv(f"data/Equity_US_{category}.csv")
             df = self.scrape_dict_urls(self.config[self.type_fund]["International_Equity"], self.config[self.type_fund]["International_Equity_Columns"])
-            df["Fund type"] = self.type_fund
-            df["Region"] = "Non US"
+            df["region"] = "Non US"
             df.to_csv("data/Equity_International_Equity.csv")
         elif self.type_fund == "Alternative_Funds":
             df = self.scrape_dict_urls(self.config[self.type_fund], self.config["Alternative_Funds_Columns"])
-            df["Fund type"] = self.type_fund
             df.to_csv(f"data/{self.type_fund}.csv")
         else:
             logger.error("Unsupported fund type.")
@@ -168,4 +169,5 @@ class MutualFundScraper:
 
 if __name__ == "__main__":
     scraper = MutualFundScraper(type_fund="Bond_Funds")
-    scraper.scrape()
+    jdata = scraper.scrape()
+    logger.info(f"the jdata is {len(jdata)}")
