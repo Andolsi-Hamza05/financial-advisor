@@ -1,0 +1,10 @@
+confluent-kafka
+pandas
+requests
+beautifulsoup4
+selenium
+kafka
+pydantic
+fastapi
+uvicorn
+aiokafka
