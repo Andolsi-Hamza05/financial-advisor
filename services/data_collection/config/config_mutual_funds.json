@@ -1,5 +1,5 @@
 {
-    "driver_path": "./config/msedgedriver.exe",
+    "driver_path": "./config/msedgedriver",
 
     "Bond_Funds":
     {
@@ -11,7 +11,7 @@
         "Long-Term National Municipal Bond Funds":"https://www.morningstar.com/best-investments/long-term-national-municipal-bond-funds",
         "Inflation-Protected Bond Funds":"https://www.morningstar.com/best-investments/inflation-protected-bond-funds"
     },
-    "Bond_Funds_Columns":["Medalist Rating", "SEC 30-Day Yield", "TTM Yield", "Average Effective Duration", "Total Return 1 year", "Total Return 3 year", "Adjusted Expense Ratio", "Asset Under Management (Fund Size)"],
+    "Bond_Funds_Columns":["medalist_rating", "sec_30_day_yield", "ttm_yield", "average_effective_duration", "total_return_1_year", "total_return_3_year", "adjusted_expense_ratio", "asset_under_management"],
 
     "Equity_Funds":
     {
