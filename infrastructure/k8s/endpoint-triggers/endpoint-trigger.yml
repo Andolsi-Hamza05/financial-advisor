@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: endpoint-trigger
 spec:
-  schedule: "*/15 * * * *"
+  schedule: "*/5 * * * *"
   jobTemplate:
     spec:
       template:
@@ -15,5 +15,7 @@ spec:
             - curl
             - -X
             - POST
-            - http://data-collection:80/producer/scrape-and-send/
+            - http://data-collection.default.svc.cluster.local:80/producer/scrape-and-send/
           restartPolicy: OnFailure
+
+
