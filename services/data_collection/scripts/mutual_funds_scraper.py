@@ -51,10 +51,17 @@ class MutualFundScraper:
         edge_options.add_argument('--blink-settings=imagesEnabled=false')
         edge_options.add_argument("--log-level=3")  # Disable logs
 
-        if os.name == 'nt':
-            service = Service(os.path.abspath(self.config['driver_path'])+".exe")
+        # Check if the app is running in a Kubernetes environment
+        if os.getenv('KUBERNETES_SERVICE_HOST'):
+            driver_path = "/app/config/msedgedriver"
         else:
-            service = Service(os.path.abspath(self.config['driver_path']))
+            driver_path = "./config/msedgedriver"
+
+        if os.name == 'nt':
+            service = Service(os.path.abspath(driver_path) + ".exe")
+        else:
+            service = Service(os.path.abspath(driver_path))
+
         driver = webdriver.Edge(service=service, options=edge_options)
         driver.implicitly_wait(30)
         logger.info("WebDriver initialized successfully.")
@@ -146,7 +153,7 @@ class MutualFundScraper:
     def scrape(self):
         if self.type_fund == "Bond_Funds":
             df = self.scrape_dict_urls(self.config[self.type_fund], self.config["Bond_Funds_Columns"])
-            df.to_json(f"data/{self.type_fund}.json")
+            # df.to_json(f"data/{self.type_fund}.json")
             jdata = df.to_json()
             return jdata
         elif self.type_fund == "Equity_Funds":
