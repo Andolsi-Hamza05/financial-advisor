@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-collection
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: data-collection
+  template:
+    metadata:
+      labels:
+        app: data-collection
+    spec:
+      containers:
+      - name: data-collection
+        image: docker.io/hamzalandolsi/data_collection:latest
+        env:
+          - name: KAFKA_TOPIC_NAME
+            value: "test_topic"
+          - name: KAFKA_SERVER
+            value: "my-cluster-kafka-bootstrap.kafka.svc.cluster.local"
+          - name: KAFKA_PORT
+            value: "9092"
+        ports:
+          - containerPort: 8000
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/configs
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "1"
+      volumes:
+      - name: config-volume
+        configMap:
+          name: data-collection-config

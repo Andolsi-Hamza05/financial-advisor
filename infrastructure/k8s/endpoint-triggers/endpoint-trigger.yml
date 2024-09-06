@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: endpoint-trigger
+spec:
+  schedule: "*/15 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: curl
+            image: curlimages/curl
+            args:
+            - curl
+            - -X
+            - POST
+            - http://data-collection:80/producer/scrape-and-send/
+          restartPolicy: OnFailure
