@@ -51,7 +51,6 @@ class MutualFundScraper:
         edge_options.add_argument('--blink-settings=imagesEnabled=false')
         edge_options.add_argument("--log-level=3")  # Disable logs
 
-        # Check if the app is running in a Kubernetes environment
         if os.getenv('KUBERNETES_SERVICE_HOST'):
             driver_path = "/app/config/msedgedriver"
         else:
@@ -153,25 +152,61 @@ class MutualFundScraper:
     def scrape(self):
         if self.type_fund == "Bond_Funds":
             df = self.scrape_dict_urls(self.config[self.type_fund], self.config["Bond_Funds_Columns"])
-            # df.to_json(f"data/{self.type_fund}.json")
             jdata = df.to_json()
+            self.driver.quit()
             return jdata
-        elif self.type_fund == "Equity_Funds":
-            for category in ["Index_Funds", "Actively_Managed_Funds", "Sector_Equity", "Thematic"]:
-                df = self.scrape_dict_urls(self.config[self.type_fund]["US Equity"][category], self.config[self.type_fund]["US Equity"][category+"_Columns"])
-                df["region"] = "US Equity"
-                df["Funds repartition Strategy"] = category
-                df.to_csv(f"data/Equity_US_{category}.csv")
-            df = self.scrape_dict_urls(self.config[self.type_fund]["International_Equity"], self.config[self.type_fund]["International_Equity_Columns"])
+
+        elif self.type_fund == "Equity_US_Index_Funds":
+            df = self.scrape_dict_urls(self.config["Equity_Funds"]["US Equity"]["Index_Funds"], self.config["Equity_Funds"]["US Equity"]["Index_Funds_Columns"])
+            df["region"] = "US Equity"
+            df["Funds repartition Strategy"] = "Index_Funds"
+            jdata = df.to_json()
+            self.driver.quit()
+            return jdata
+
+        elif self.type_fund == "Equity_US_Actively_Managed_Funds":
+            df = self.scrape_dict_urls(self.config["Equity_Funds"]["US Equity"]["Actively_Managed_Funds"], self.config["Equity_Funds"]["US Equity"]["Actively_Managed_Funds_Columns"])
+            df["region"] = "US Equity"
+            df["Funds repartition Strategy"] = "Actively_Managed_Funds"
+            jdata = df.to_json()
+            self.driver.quit()
+            return jdata
+
+        elif self.type_fund == "Equity_US_Sector_Equity":
+            df = self.scrape_dict_urls(self.config["Equity_Funds"]["US Equity"]["Sector_Equity"], self.config["Equity_Funds"]["US Equity"]["Sector_Equity_Columns"])
+            df["region"] = "US Equity"
+            df["Funds repartition Strategy"] = "Sector_Equity"
+            jdata = df.to_json()
+            self.driver.quit()
+            return jdata
+
+        elif self.type_fund == "Equity_US_Thematic":
+            df = self.scrape_dict_urls(self.config["Equity_Funds"]["US Equity"]["Thematic"], self.config["Equity_Funds"]["US Equity"]["Thematic_Columns"])
+            df["region"] = "US Equity"
+            df["Funds repartition Strategy"] = "Thematic"
+            jdata = df.to_json()
+            self.driver.quit()
+            return jdata
+
+        elif self.type_fund == "Equity_Non_US_Funds":
+            df = self.scrape_dict_urls(self.config["Equity_Funds"]["International_Equity"], self.config["Equity_Funds"]["International_Equity_Columns"])
             df["region"] = "Non US"
-            df.to_csv("data/Equity_International_Equity.csv")
+            df["Funds repartition Strategy"] = ""
+            jdata = df.to_json()
+            self.driver.quit()
+            return jdata
+
         elif self.type_fund == "Alternative_Funds":
             df = self.scrape_dict_urls(self.config[self.type_fund], self.config["Alternative_Funds_Columns"])
-            df.to_csv(f"data/{self.type_fund}.csv")
+            jdata = df.to_json()
+            self.driver.quit()
+            return jdata
+
         else:
             logger.error("Unsupported fund type.")
-            raise ValueError("Unsupported fund type. Supported fund types are : Bond_Funds, Equity_Funds or Alternative_Funds")
-        self.driver.quit()
+            raise ValueError("Unsupported fund type. Supported fund types are: Bond_Funds, Equity_US_Index_Funds,"
+                             "Equity_US_Actively_Managed_Funds, Equity_US_Sector_Equity, Equity_US_Thematic,"
+                             "Equity_Non_US_Funds, or Alternative_Funds")
 
 
 if __name__ == "__main__":

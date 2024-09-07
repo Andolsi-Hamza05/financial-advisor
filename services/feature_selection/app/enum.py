@@ -7,5 +7,5 @@ class EnvironmentVariables(str, Enum):
     KAFKA_SERVER = 'KAFKA_SERVER'
     KAFKA_PORT = 'KAFKA_PORT'
 
-    def get_env(self, variable=None):
-        return os.environ.get(self, variable)
+    def get_env(self):
+        return os.environ.get(self.value)
