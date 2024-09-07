@@ -51,7 +51,6 @@ class MutualFundScraper:
         edge_options.add_argument('--blink-settings=imagesEnabled=false')
         edge_options.add_argument("--log-level=3")  # Disable logs
 
-        # Check if the app is running in a Kubernetes environment
         if os.getenv('KUBERNETES_SERVICE_HOST'):
             driver_path = "/app/config/msedgedriver"
         else:
