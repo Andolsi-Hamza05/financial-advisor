@@ -3,7 +3,7 @@ import time
 from main.core.gateways.kafka import Kafka
 from main.dependencies.kafka import get_kafka_instance
 from main.enum import EnvironmentVariables
-from main.routers import mutual_funds_router, commodities_router
+from main.routers import mutual_funds_router, commodities_router, bonds_router
 
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, Request
@@ -56,5 +56,12 @@ app.include_router(
     commodities_router.router,
     prefix="/commodities",
     tags=["commodities"],
+    dependencies=[Depends(get_kafka_instance)],
+)
+
+app.include_router(
+    bonds_router.router,
+    prefix="/bonds",
+    tags=["bonds"],
     dependencies=[Depends(get_kafka_instance)],
 )
