@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import json
 
 
-def scrape_bond_data(url="https://tradingeconomics.com/bonds"):
+def scrape(url="https://tradingeconomics.com/bonds"):
     # Sending a GET request to the website
     response = requests.get(url)
 
@@ -33,5 +33,5 @@ def scrape_bond_data(url="https://tradingeconomics.com/bonds"):
         return json.dumps({"error": "Table not found"})
 
 
-json_output = scrape_bond_data()
+json_output = scrape()
 print(json_output)
