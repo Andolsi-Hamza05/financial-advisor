@@ -264,7 +264,7 @@ class YahooScraperUSA(YahooScraper):
     def __init__(self, country: str):
         super().__init__()
         self.country = country
-        self.max_iteration_heavy = 14
+        self.max_iteration_heavy = 6
         self.max_iteration_light = 5
 
     def scrape(self) -> pd.DataFrame:
@@ -283,7 +283,7 @@ class YahooScraperBigCountries(YahooScraper):
     def __init__(self, country: str):
         super().__init__()
         self.country = country
-        self.max_iteration = 6
+        self.max_iteration = 5
 
     def scrape(self) -> pd.DataFrame:
         """Scrape data for specified country and return a DataFrame."""
@@ -359,6 +359,6 @@ class YahooScraperFactory:
 
 
 if __name__ == "__main__":
-    scraper = YahooScraperFactory.create_scraper('usa')
+    scraper = YahooScraperFactory.create_scraper('canada')
     data = scraper.scrape()
     print(data.head())
