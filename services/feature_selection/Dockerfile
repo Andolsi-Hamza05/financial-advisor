@@ -6,9 +6,9 @@ FROM --platform=linux/amd64 $BASE_CONTAINER
 
 
 # dont write pyc files
-ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONDONTWRITEBYTECODE=1
 # dont buffer to stdout/stderr
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 
 # Sets the user name to use when running the image.
 USER root
