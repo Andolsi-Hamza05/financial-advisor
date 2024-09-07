@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:6.2.0
@@ -49,7 +51,7 @@ services:
       context: ./feature_selection
       dockerfile: Dockerfile
     environment:
-      - KAFKA_TOPIC_NAME=topic_test
+      - KAFKA_TOPIC_NAME=test_topic
       - KAFKA_SERVER=kafka
       - KAFKA_PORT=29092
     ports:
@@ -68,7 +70,7 @@ services:
       context: ./data_collection
       dockerfile: Dockerfile
     environment:
-      - KAFKA_TOPIC_NAME=topic_test
+      - KAFKA_TOPIC_NAME=test_topic
       - KAFKA_SERVER=kafka
       - KAFKA_PORT=29092
     ports:
@@ -83,3 +85,4 @@ services:
 networks:
   broker-kafka:
     driver: bridge
+
