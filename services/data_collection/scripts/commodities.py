@@ -1,45 +1,44 @@
 import requests
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Base URL for the API
 BASE_URL = 'https://www.alphavantage.co/query'
 
-API_KEY = '21GALYBRY655E8HO'
+# Fetch API key from environment variables
+API_KEY = os.getenv('ALPHA_VANTAGE_API_KEY')
 
 
 def fetch_commodity_data(function_param):
+    if not API_KEY:
+        raise ValueError("API key is missing. Ensure that the ALPHA_VANTAGE_API_KEY environment variable is set.")
+
     url = f"{BASE_URL}?function={function_param}&interval=monthly&apikey={API_KEY}"
     response = requests.get(url)
+
+    if response.status_code != 200:
+        raise Exception(f"Error fetching data: {response.status_code} - {response.text}")
+
     return response.json()
 
 
-def wti_data():
-    return fetch_commodity_data('WTI')
+class CommoditiesScraper:
+    def __init__(self, commodity_type):
+        self.commodity_type = commodity_type.upper()
 
-
-def brent_data():
-    return fetch_commodity_data('BRENT')
-
-
-def natural_gas_data():
-    return fetch_commodity_data('NATURAL_GAS')
-
-
-def copper_data():
-    return fetch_commodity_data('COPPER')
-
-
-def cotton_data():
-    return fetch_commodity_data('COTTON')
-
-
-def sugar_data():
-    return fetch_commodity_data('SUGAR')
-
-
-def coffee_data():
-    return fetch_commodity_data('COFFEE')
+    def scrape(self):
+        return fetch_commodity_data(self.commodity_type)
 
 
 if __name__ == "__main__":
-    wti = wti_data()
-    print(wti)
+    try:
+        # Example usage:
+        commodity_type = 'WTI'
+        scraper = CommoditiesScraper(commodity_type)
+        data = scraper.scrape()
+        print(data)
+    except Exception as e:
+        print(f"Error: {e}")
