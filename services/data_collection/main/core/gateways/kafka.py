@@ -6,12 +6,7 @@ from aiokafka import AIOKafkaProducer
 class Kafka:
     instance = None
 
-    def __init__(
-        self,
-        topic,
-        port,
-        servers
-    ) -> None:
+    def __init__(self, topic, port, servers) -> None:
         self._topic = topic
         self._port = port
         self._servers = servers
@@ -22,5 +17,6 @@ class Kafka:
         loop = asyncio.get_event_loop()
         return AIOKafkaProducer(
             loop=loop,
-            bootstrap_servers=f'{self._servers}:{self._port}'
+            bootstrap_servers=f'{self._servers}:{self._port}',
+            max_request_size=5 * 1024 * 1024
         )
