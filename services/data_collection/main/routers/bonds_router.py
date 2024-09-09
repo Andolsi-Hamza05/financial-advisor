@@ -15,7 +15,7 @@ logger = setup_logging()
 router = APIRouter()
 
 
-@router.post("/scrape-and-send/bonds")
+@router.post("/scrape-and-send/bonds/")
 async def scrape_and_send(server: Kafka = Depends(get_kafka_instance)):
     try:
         json_data = scrape()
