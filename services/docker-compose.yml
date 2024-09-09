@@ -25,9 +25,10 @@ services:
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:29092,PLAINTEXT_HOST://0.0.0.0:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_MESSAGE_MAX_BYTES: 2000000000
-      KAFKA_REPLICA_FETCH_MAX_BYTES: 2000000000
-      KAFKA_FETCH_MESSAGE_MAX_BYTES: 2000000000
+      KAFKA_MESSAGE_MAX_BYTES: 5000000         # Allow messages up to 5 MB
+      KAFKA_REPLICA_FETCH_MAX_BYTES: 5000000   # Allow replica fetching up to 5 MB
+      KAFKA_FETCH_MESSAGE_MAX_BYTES: 5000000   # Allow fetch requests up to 5 MB
+      KAFKA_MAX_REQUEST_SIZE: 5000000          # Set max request size to 5 MB
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
 
@@ -52,6 +53,8 @@ services:
       - KAFKA_TOPIC_NAME=test_topic
       - KAFKA_SERVER=kafka
       - KAFKA_PORT=29092
+      - KAFKA_FETCH_MAX_BYTES=5000000          # Allow fetching larger messages (e.g., 5 MB)
+      - KAFKA_MAX_PARTITION_FETCH_BYTES=5000000
     ports:
       - 8001:8001
     restart: "always"
@@ -71,6 +74,7 @@ services:
       - KAFKA_TOPIC_NAME=test_topic
       - KAFKA_SERVER=kafka
       - KAFKA_PORT=29092
+      - KAFKA_MAX_REQUEST_SIZE=5000000         # Set max request size to 5 MB
     ports:
       - "8000:8000"
     restart: "always"
