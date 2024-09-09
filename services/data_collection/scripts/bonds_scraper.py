@@ -20,7 +20,7 @@ logger = setup_logging()
 def scrape(url="https://tradingeconomics.com/bonds"):
     """Scrape bond data tables using Selenium and return JSON format."""
 
-    def setup_driver(timeout: int = 90) -> webdriver.Edge:
+    def setup_driver(timeout: int = 30) -> webdriver.Edge:
         """Initialize the WebDriver for Edge with a configurable timeout."""
         edge_options = Options()
         edge_options.use_chromium = True
@@ -73,7 +73,7 @@ def scrape(url="https://tradingeconomics.com/bonds"):
             logger.info(f"Processing table {i+1} with XPath: {xpath}")
 
             try:
-                table = WebDriverWait(driver, 1).until(
+                table = WebDriverWait(driver, 5).until(
                     EC.presence_of_element_located((By.XPATH, xpath))
                 )
             except Exception as e:
