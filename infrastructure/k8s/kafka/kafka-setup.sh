@@ -26,6 +26,20 @@ kubectl apply -f $KAFKA_CR_URL -n $NAMESPACE
 echo "Waiting for Kafka cluster to be ready..."
 kubectl wait kafka/my-cluster --for=condition=Ready --timeout=$WAIT_TIMEOUT -n $NAMESPACE
 
+
+echo "Updating Kafka configuration..."
+kubectl patch kafka my-cluster -n $NAMESPACE --type='merge' -p='{
+  "spec": {
+    "kafka": {
+      "config": {
+        "message.max.bytes": "10485760",
+        "max.request.size": "10485760"
+      }
+    }
+  }
+}'
+
+
 # Check status of all pods in the Kafka namespace
 echo "Kafka setup completed successfully!"
 kubectl get pods -n $NAMESPACE

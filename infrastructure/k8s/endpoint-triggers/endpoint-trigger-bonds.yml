@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: trigger-bonds
+spec:
+  schedule: "*/10 * * * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: single-endpoint-trigger
+            image: curlimages/curl:latest
+            command:
+            - /bin/sh
+            - -c
+            - |
+              ENDPOINT="http://data-collection.default.svc.cluster.local:80/bonds/scrape-and-send/bonds/"
+              echo "Hitting $ENDPOINT"
+              curl -X POST "$ENDPOINT"
+          restartPolicy: OnFailure
