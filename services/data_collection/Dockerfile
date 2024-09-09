@@ -39,5 +39,6 @@ COPY pyproject.toml poetry.lock* /app/
 RUN pip install poetry && poetry install --no-dev
 COPY . /app/
 
-# Set the entry point
-CMD ["poetry", "run", "uvicorn", "main.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Set the entry point with workers
+CMD ["poetry", "run", "uvicorn", "main.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]
+
