@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feature-selection
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: feature-selection
+  template:
+    metadata:
+      labels:
+        app: feature-selection
+    spec:
+      containers:
+        - name: feature-selection
+          image: docker.io/hamzalandolsi/feature_selection:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: KAFKA_TOPIC_NAME
+              value: "test_topic"
+            - name: KAFKA_SERVER
+              value: "my-cluster-kafka-bootstrap.kafka.svc.cluster.local"
+            - name: KAFKA_PORT
+              value: "9092"
+            # Azure ADLS Credentials
+            - name: AZURE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: adls-credentials
+                  key: AZURE_CLIENT_ID
+            - name: AZURE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: adls-credentials
+                  key: AZURE_CLIENT_SECRET
+            - name: AZURE_TENANT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: adls-credentials
+                  key: AZURE_TENANT_ID
+            - name: ADLS_ACCOUNT_NAME
+              value: "your_adls_account_name"
+            - name: ADLS_FILESYSTEM_NAME
+              value: "your_adls_filesystem_name"
+          resources:
+            limits:
+              memory: "1Gi"
+              cpu: "1"

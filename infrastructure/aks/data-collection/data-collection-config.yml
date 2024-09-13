@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: data-collection-config
+  namespace: default
+data:
+  KAFKA_TOPIC_NAME: "test_topic"
+  KAFKA_SERVER: "my-cluster-kafka-bootstrap.kafka.svc.cluster.local"
+  KAFKA_PORT: "9092"

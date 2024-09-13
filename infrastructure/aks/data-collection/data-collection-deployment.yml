@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-collection
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: data-collection
+  template:
+    metadata:
+      labels:
+        app: data-collection
+    spec:
+      containers:
+      - name: data-collection
+        image: docker.io/hamzalandolsi/data_collection:latest
+        env:
+          - name: KAFKA_TOPIC_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: data-collection-config
+                key: KAFKA_TOPIC_NAME
+          - name: KAFKA_SERVER
+            valueFrom:
+              configMapKeyRef:
+                name: data-collection-config
+                key: KAFKA_SERVER
+          - name: KAFKA_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: data-collection-config
+                key: KAFKA_PORT
+        ports:
+          - containerPort: 8000
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/configs
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "2"
+      volumes:
+      - name: config-volume
+        configMap:
+          name: data-collection-config
+
