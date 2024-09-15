@@ -6,4 +6,4 @@ kubectl delete pvc -l strimzi.io/name=my-cluster-kafka -n kafka
 kubectl -n kafka delete -f 'https://strimzi.io/install/latest?namespace=kafka'
 kubectl delete namespace kafka
 kubectl delete -f infrastructure/aks/data-collection
-kubectl delete -f infrastructure/aks/feature_selection
+kubectl delete -f infrastructure/aks/feature-selection

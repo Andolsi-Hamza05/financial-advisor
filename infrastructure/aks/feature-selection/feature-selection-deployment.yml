@@ -41,9 +41,9 @@ spec:
                   name: adls-credentials
                   key: AZURE_TENANT_ID
             - name: ADLS_ACCOUNT_NAME
-              value: "your_adls_account_name"
+              value: adls0feature0selection
             - name: ADLS_FILESYSTEM_NAME
-              value: "your_adls_filesystem_name"
+              value: data
           resources:
             limits:
               memory: "1Gi"
