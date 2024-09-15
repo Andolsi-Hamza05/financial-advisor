@@ -1,6 +1,6 @@
 # Financial Advisor
 
-The **Financial Advisor** application is designed to help investors construct their portfolios based on their preferences, market trends, and asset analysis. First, the AI agent interacts with customers to perform customer profiling and understand their preferences. It send data to deployed machine learning model to get estimation of the risk aversion(tolerance) coefficient. Then based on natural language prompts it chooses assets from the asset data available in the database. For maintaining our database up to date and representing the actual market state and asset related information, we designed a near real world pipeline : It collects real-time data from financial data sources, we ensure only new data is processed, we compute some important metrics do som data validation checks to get the final gold layer. Finally, the chosen assets and the relevant information of the investor such as risk aversion coefficient are sent to portfolio optimization microservice to provide an optimal portfolio and write a detailed reports explaining the choices and some useful visualizations.
+The **Financial Advisor** application is designed to help investors construct their portfolios based on their preferences, market trends, and asset analysis. First, the AI agent interacts with customers to perform `customer profiling` and understand their preferences. It send data to deployed machine learning model to get estimation of the `risk aversion(tolerance) coefficient`. Then based on natural language prompts it chooses assets from the asset data available in the database. For maintaining our database up to date and representing the actual market state and asset related information, we designed a near real world pipeline : `data collection` microserivce that collects real-time data from financial data sources, we ensure only new data is processed by the `feature selection` engine, we compute some important metrics do som data validation checks to get the final gold layer. Finally, the chosen assets and the relevant information of the investor such as risk aversion coefficient are sent to `portfolio optimization` microservice to provide an optimal portfolio and write a detailed reports explaining the choices and some useful visualizations via a friendly `User Interface`.
 
 ---
 
@@ -11,7 +11,7 @@ Make sure you have the following installed on your system:
 - [Minikube](https://minikube.sigs.k8s.io/docs/start/)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [Docker](https://docs.docker.com/get-docker/)
-- [Strimzi Kafka Operator](https://strimzi.io/) for Kubernetes
+- [Azure subscription](https://azure.com/) for Kubernetes
 
 ## Deploying the data collection, kafka and feature selection into AKS cluster:
 
