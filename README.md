@@ -11,7 +11,7 @@ Make sure you have the following installed on your system:
 - [Minikube](https://minikube.sigs.k8s.io/docs/start/)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [Docker](https://docs.docker.com/get-docker/)
-- [Azure subscription](https://azure.com/) for Kubernetes
+- [Azure subscription](https://azure.com/)
 
 ## Deploying the data collection, kafka and feature selection into AKS cluster:
 
