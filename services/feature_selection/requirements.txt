@@ -1,6 +1,7 @@
+pyspark==3.3.2
+delta-spark==2.3.0
+pandas==2.2.2
 kafka-python==2.0.2
-flake8==3.9.0
-python-dotenv==0.19.0
-pyspark==3.5.2
-delta-spark==3.2.0
-azure-storage-blob==12.22.0
+python-dotenv==1.0.1
+azure-identity==1.17.1
+azure-storage-file-datalake==12.16.0
