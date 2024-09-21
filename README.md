@@ -1,12 +1,8 @@
 # Financial Advisor
 
-The **Financial Advisor** application interacts with customers to perform customer profiling and understand their preferences. It collects real-time data from financial data sources, selects financial assets, and re-ranks them based on customer profiles. Finally, the application uses Mean-Variance Optimization methods to provide an optimal portfolio.
+The **Financial Advisor** application is designed to help investors construct their portfolios based on their preferences, market trends, and asset analysis. First, the AI agent interacts with customers to perform `customer profiling` and understand their preferences. It send data to deployed machine learning model to get estimation of the `risk aversion(tolerance) coefficient`. Then based on natural language prompts it chooses assets from the asset data available in the database. For maintaining our database up to date and representing the actual market state and asset related information, we designed a near real world pipeline : `data collection` microserivce that collects real-time data from financial data sources, we ensure only new data is processed by the `feature selection` engine, we compute some important metrics do som data validation checks to get the final gold layer. Finally, the chosen assets and the relevant information of the investor such as risk aversion coefficient are sent to `portfolio optimization` microservice to provide an optimal portfolio and write a detailed reports explaining the choices and some useful visualizations via a friendly `User Interface`.
 
 ---
-
-## Kafka & Microservices Setup on Minikube
-
-This guide outlines how to set up a Kafka cluster using Strimzi on a Minikube Kubernetes cluster and deploy the `data_collection` and `feature_selection` microservices.
 
 ### Prerequisites
 
@@ -15,70 +11,27 @@ Make sure you have the following installed on your system:
 - [Minikube](https://minikube.sigs.k8s.io/docs/start/)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [Docker](https://docs.docker.com/get-docker/)
-- [Strimzi Kafka Operator](https://strimzi.io/) for Kubernetes
+- [Azure subscription](https://azure.com/)
 
-### Step 1: Kafka Setup
+## Deploying the data collection, kafka and feature selection into AKS cluster:
 
-To set up Kafka in your Minikube cluster, navigate to the Kafka setup directory and run the `kafka-setup.sh` script:
-
-```bash
-cd infrastructure/k8s/kafka
-chmod +x kafka-setup.sh
-./kafka-setup.sh
-```
-
-What This Script Does:
-Initializes Minikube with the Docker driver.
-Sets up the Strimzi Kafka Operator.
-Deploys a Kafka cluster (my-cluster).
-The setup may take up to 6 minutes to complete. wait until you see something like that :
+To deploy this project into your azure kubernetes cluster, you can simply provision your aks cluster from azure portal, configure the kubectl to point to your newly created cluster. Ensure you create a managed identity and pass the related secrets in the entrypoint bash script where I put `****` (You can also adjust the kubernetes manifests or the strimzi custom resource deployments) then run the following:
 
 ```bash
-Kafka setup completed successfully!
-NAME                                          READY   STATUS    RESTARTS   AGE
-my-cluster-dual-role-0                        1/1     Running   0          85s
-my-cluster-entity-operator-658cd9bf5b-4grlz   2/2     Running   0          22s
-strimzi-cluster-operator-7fb8ff4bd-z9mrl      1/1     Running   0          2m28s
+bash infrastructure/aks/entrypoint.sh
 ```
 
-### Step 2: Deploy Microservices
 
-After Kafka is successfully set up, apply the Kubernetes manifests for the `data_collection` and `feature_selection` microservices:
+Once you finished testing your cluster and see the data collected successfully and sent to kafka and consumed and processed to the final destination, you can terminate all what you created inside your cluster by running :
 
 ```bash
-kubectl apply -f infrastructure/k8s/data_collection
-kubectl apply -f infrastructure/k8s/feature_selection
+bash infrastructure/aks/terminate.sh
 ```
 
-Verifying Microservice Deployment:
-Wait about 3 minutes for the microservices to initialize. Check the status of the pods using the following command:
+## Deploying the data collection, kafka and feature selection into local minikube cluster:
+Alternatively, if you want to test the setup locally you can try running :
 
 ```bash
-kubectl get pod
+bash infrastructure/minikube/kafka/kafka-setup.sh
 ```
-You should see both `data_collection` and `feature_selection` pods in the Running state:
-
-```bash
-NAME                                READY   STATUS    RESTARTS   AGE
-data-collection-94bfc7b78-zcj82     1/1     Running   0          5m7s
-feature-selection-559c49c96-6r58z   1/1     Running   0          4m55s
-```
-
-### Step 3: Forward Ports to Access the data_collection API and Sending Requests
-
-Once the data_collection microservice is up and running, you can port-forward the service to access it locally:
-
-```bash
-kubectl port-forward svc/data-collection 8080:80
-```
-This command will forward traffic from `localhost:8080` to the `data_collection` service running in Kubernetes.
-
-You can now send POST requests to the `data_collection` service using an API testing tool like Thunder Client or Postman.
-
-Example Endpoint:
-```bash
-POST http://localhost:8080/producer/scrape-and-send/
-```
-
-This will trigger the scrape-and-send process in the `data_collection` microservice.
-you can check the logs of `data_collection` pod to see the logs of the script running successfully and scraping data as intended and the logs of `feature_selection` to ensure the data has been consumed from kafka successfully.
+Then you can apply the data collection and feature selection manifests inside the `infrastructure/minikube/` directory then pick some endpoint triggers (cronjobs to trigger the data collection endpoints) for your testing purposes. Ensure you're not runing out of memory or CPUs or any other constraints/limits locally.

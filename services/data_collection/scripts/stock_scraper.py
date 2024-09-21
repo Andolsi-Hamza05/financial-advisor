@@ -282,7 +282,9 @@ class YahooScraper(ABC):
         light_data = self.scrape_multiple_urls_in_parallel(self.config[light_options_key], max_iteration_light)
 
         df = self.create_dataframe(heavy_data + light_data)
-        return df.to_json()
+        jdata = df.to_json(orient="records")
+        self.driver.quit()
+        return jdata
 
 
 class YahooScraperUSA(YahooScraper):
@@ -294,7 +296,8 @@ class YahooScraperUSA(YahooScraper):
 
     def scrape(self) -> dict:
         """Scrape data for USA and return JSON."""
-        return self.scrape_data("heavy_sector_options", "light_sector_options", self.max_iteration_heavy, self.max_iteration_light)
+        jdata = self.scrape_data("heavy_sector_options", "light_sector_options", self.max_iteration_heavy, self.max_iteration_light)
+        return jdata
 
 
 class YahooScraperBigCountries(YahooScraper):
@@ -305,7 +308,8 @@ class YahooScraperBigCountries(YahooScraper):
 
     def scrape(self) -> dict:
         """Scrape data for specified country and return JSON."""
-        return self.scrape_data("heavy_sector_options", "light_sector_options", self.max_iteration, self.max_iteration)
+        jdata = self.scrape_data("heavy_sector_options", "light_sector_options", self.max_iteration, self.max_iteration)
+        return jdata
 
 
 class YahooScraperMediumCountries(YahooScraper):
@@ -317,7 +321,8 @@ class YahooScraperMediumCountries(YahooScraper):
 
     def scrape(self) -> dict:
         """Scrape data for specified country and return JSON."""
-        return self.scrape_data("heavy_sector_options", "light_sector_options", self.max_iteration_1, self.max_iteration_2)
+        jdata = self.scrape_data("heavy_sector_options", "light_sector_options", self.max_iteration_1, self.max_iteration_2)
+        return jdata
 
 
 class YahooScraperSmallCountries(YahooScraper):
@@ -329,7 +334,8 @@ class YahooScraperSmallCountries(YahooScraper):
 
     def scrape(self) -> dict:
         """Scrape data for specified country and return JSON."""
-        return self.scrape_data("heavy_sector_options", "light_sector_options", self.max_iteration_1, self.max_iteration_2)
+        jdata = self.scrape_data("heavy_sector_options", "light_sector_options", self.max_iteration_1, self.max_iteration_2)
+        return jdata
 
 
 class YahooScraperFactory:

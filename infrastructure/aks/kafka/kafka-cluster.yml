@@ -1,0 +1,77 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  name: dual-role
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  replicas: 3
+  roles:
+    - controller
+    - broker
+  storage:
+    type: jbod
+    volumes:
+      - id: 0
+        type: persistent-claim
+        size: 100Gi
+        deleteClaim: false
+        kraftMetadata: shared
+
+---
+# Kafka cluster with 3 replicas and external access
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: my-cluster
+  annotations:
+    strimzi.io/node-pools: enabled
+    strimzi.io/kraft: enabled
+spec:
+  kafka:
+    version: 3.8.0
+    metadataVersion: 3.8-IV0
+    replicas: 3
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
+      - name: external
+        port: 9094
+        type: loadbalancer
+        tls: false
+        authentication:
+          type: scram-sha-512  # Optional authentication for external consumers
+    config:
+      offsets.topic.replication.factor: 3
+      transaction.state.log.replication.factor: 3
+      transaction.state.log.min.isr: 2  # Minimum in-sync replicas for fault tolerance
+      default.replication.factor: 3     # Default replication factor for new topics
+      min.insync.replicas: 2            # Minimum replicas that must acknowledge a write for reliability
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
+
+---
+# Service to expose the external listener (LoadBalancer for cloud environments like AKS)
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-cluster-kafka-external
+  namespace: kafka
+spec:
+  type: LoadBalancer  # Use NodePort if not using cloud (for on-prem environments)
+  ports:
+    - name: external
+      port: 9094
+      targetPort: 9094
+  selector:
+    strimzi.io/kind: Kafka
+    strimzi.io/name: my-cluster
+
+

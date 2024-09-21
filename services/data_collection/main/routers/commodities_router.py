@@ -36,7 +36,7 @@ async def scrape_and_send_commodities(commodity_type: str, server: Kafka):
 
         topic_name = server._topic
         payload = {
-            "type": commodity_type,
+            "type": "commodity",
             "data": json_data
         }
 

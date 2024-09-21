@@ -1,6 +1,7 @@
 import requests
 import os
 from dotenv import load_dotenv
+import json
 
 # Load environment variables from .env file
 load_dotenv()
@@ -30,7 +31,9 @@ class CommoditiesScraper:
         self.commodity_type = commodity_type.upper()
 
     def scrape(self):
-        return fetch_commodity_data(self.commodity_type)
+        data = fetch_commodity_data(self.commodity_type)
+        jdata = data.get('data')
+        return json.dumps(jdata)
 
 
 if __name__ == "__main__":
