@@ -99,25 +99,3 @@ def scrape(url="https://tradingeconomics.com/bonds"):
     except Exception as e:
         logger.error(f"An error occurred: {e}")
         return json.dumps({"error in bonds_scraper": str(e)})
-
-
-if __name__ == "__main__":
-    jdata = scrape()
-    logger.info(f"the jdata is {len(jdata)}")
-    data_list = json.loads(jdata)
-
-    # Create the 'data' directory if it doesn't exist
-    data_directory = 'data'
-    if not os.path.exists(data_directory):
-        os.makedirs(data_directory)
-
-    file_name = "bonds_data.json"
-
-    file_path = os.path.join(data_directory, file_name)
-
-    # Write each dict to a new line in the JSON file
-    with open(file_path, 'w') as json_file:
-        for record in data_list:
-            json_file.write(json.dumps(record) + '\n')
-
-    print(f"Data saved to {file_path}")
