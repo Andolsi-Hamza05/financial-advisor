@@ -1,0 +1,100 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.banner {
+    background-color: #4CAF50; /* A nice green color */
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.content {
+    display: flex;
+}
+
+.left-section {
+    flex: 1;
+    padding: 20px;
+}
+
+.right-section {
+    width: 200px; /* Adjust the width of the sidebar */
+    background-color: #f1f1f1; /* Light grey background */
+    padding: 20px;
+}
+
+.steps-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Align steps to the right */
+}
+
+.step {
+    width: 30px;
+    height: 30px;
+    background-color: #e7e7e7;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.completed {
+    background-color: #4CAF50; /* Green color for completed steps */
+    color: white;
+}
+
+.chat-interface {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-box {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fafafa;
+}
+
+.chat-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    flex: 1;
+}
+
+.send-button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.send-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.user-message {
+    text-align: right;
+    margin: 5px 0;
+    color: #000; /* User message color */
+}
+
+.ai-message {
+    text-align: left;
+    margin: 5px 0;
+    color: #007BFF; /* AI message color */
+}
