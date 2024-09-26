@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Financial Advisor</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="banner">
+        <h1>Getting to optimize your first portfolio with our LLM financial advisor</h1>
+    </div>
+
+    <div class="content">
+        <div class="left-section">
+            {% block content %}{% endblock %}
+        </div>
+
+        <div class="right-section">
+            <nav class="steps-nav">
+                <div class="step {{ 'completed' if step >= 1 else '' }}">1</div>
+                <div class="step {{ 'completed' if step >= 2 else '' }}">2</div>
+                <div class="step {{ 'completed' if step >= 3 else '' }}">3</div>
+            </nav>
+        </div>
+    </div>
+</body>
+</html>
