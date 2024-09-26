@@ -283,7 +283,6 @@ class YahooScraper(ABC):
 
         df = self.create_dataframe(heavy_data + light_data)
         jdata = df.to_json(orient="records")
-        self.driver.quit()
         return jdata
 
 
@@ -361,6 +360,21 @@ class YahooScraperFactory:
 
 
 if __name__ == "__main__":
-    scraper = YahooScraperFactory.create_scraper('brazil')
-    data = scraper.scrape()
-    print(data)
+    scraper = YahooScraperFactory.create_scraper('uk')
+    jdata = scraper.scrape()
+    print(len(jdata))
+    data_list = json.loads(jdata)
+
+    data_directory = 'data'
+    if not os.path.exists(data_directory):
+        os.makedirs(data_directory)
+
+    file_name = "uk_data.json"
+
+    file_path = os.path.join(data_directory, file_name)
+
+    with open(file_path, 'w') as json_file:
+        for record in data_list:
+            json_file.write(json.dumps(record) + '\n')
+
+    print(f"Data saved to {file_path}")

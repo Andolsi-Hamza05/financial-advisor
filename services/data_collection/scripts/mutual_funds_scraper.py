@@ -157,7 +157,7 @@ class MutualFundScraper:
                           "total_return_3_year", "adjusted_expense_ratio", "asset_under_management",
                           "category", "fund_type"]
             df["region"] = "US Bonds"
-            df["Funds repartition Strategy"] = ""
+            df["Funds repartition Strategy"] = "Bonds"
             jdata = df.to_json(orient="records")
             self.driver.quit()
             return jdata
@@ -188,10 +188,9 @@ class MutualFundScraper:
 
         elif self.type_fund == "Equity_US_Sector_Equity":
             df = self.scrape_dict_urls(self.config["Equity_Funds"]["US Equity"]["Sector_Equity"], self.config["Equity_Funds"]["US Equity"]["Sector_Equity_Columns"])
-            df.columns = ["name", "symbol", "medalist_rating", "sec_30_day_yield",
-                          "ttm_yield", "average_effective_duration", "total_return_1_year",
-                          "total_return_3_year", "adjusted_expense_ratio", "asset_under_management",
-                          "category", "fund_type"]
+            df.columns = ["name", "symbol", "Morningstar Rating for Funds", "Medalist Rating", "Adjusted Expense Ratio",
+                          "Total Return(1 year)", "Total Return(3 year)",
+                          "Total Return(5 years)", "Fund size(AUM)", "category", "fund_type"]
             df["region"] = "US Equity"
             df["Funds repartition Strategy"] = "Sector_Equity"
             jdata = df.to_json(orient="records")
@@ -200,9 +199,9 @@ class MutualFundScraper:
 
         elif self.type_fund == "Equity_US_Thematic":
             df = self.scrape_dict_urls(self.config["Equity_Funds"]["US Equity"]["Thematic"], self.config["Equity_Funds"]["US Equity"]["Thematic_Columns"])
-            df.columns = ["name", "symbol", "medalist_rating", "sec_30_day_yield",
-                          "ttm_yield", "average_effective_duration", "total_return_1_year",
-                          "total_return_3_year", "adjusted_expense_ratio", "asset_under_management",
+            df.columns = ["name", "symbol", "Medalist Rating", "Total Return(1 year)", "Total Return(3 year)",
+                          "Morningstar Return Rating", "Morningstar Risk Rating",
+                          "Adjusted Expense Ratio", "Fund size(AUM)",
                           "category", "fund_type"]
             df["region"] = "US Equity"
             df["Funds repartition Strategy"] = "Thematic"
@@ -212,22 +211,20 @@ class MutualFundScraper:
 
         elif self.type_fund == "Equity_Non_US_Funds":
             df = self.scrape_dict_urls(self.config["Equity_Funds"]["International_Equity"], self.config["Equity_Funds"]["International_Equity_Columns"])
-            df.columns = ["name", "symbol", "medalist_rating", "sec_30_day_yield",
-                          "ttm_yield", "average_effective_duration", "total_return_1_year",
-                          "total_return_3_year", "adjusted_expense_ratio", "asset_under_management",
-                          "category", "fund_type"]
+            df.columns = ["name", "symbol", "Medalist Rating", "Morningstar Rating for Funds", "Total Return(1 year)",
+                          "Total Return(3 year)", "Total Return(5 years)", "Adjusted Expense Ratio",
+                          "Fund size(AUM)", "category", "fund_type"]
             df["region"] = "Non US"
-            df["Funds repartition Strategy"] = ""
+            df["Funds repartition Strategy"] = "All"
             jdata = df.to_json(orient="records")
             self.driver.quit()
             return jdata
 
         elif self.type_fund == "Alternative_Funds":
             df = self.scrape_dict_urls(self.config[self.type_fund], self.config["Alternative_Funds_Columns"])
-            df.columns = ["name", "symbol", "medalist_rating", "sec_30_day_yield",
-                          "ttm_yield", "average_effective_duration", "total_return_1_year",
-                          "total_return_3_year", "adjusted_expense_ratio", "asset_under_management",
-                          "category", "fund_type"]
+            df.columns = ["name", "symbol", "Medalist Rating", "Morningstar Rating for Funds", "Total Return(1 year)",
+                          "Total Return(3 year)", "Total Return(5 years)", "Adjusted Expense Ratio",
+                          "Fund size(AUM)", "category", "fund_type"]
             jdata = df.to_json(orient="records")
             self.driver.quit()
             return jdata
@@ -240,6 +237,23 @@ class MutualFundScraper:
 
 
 if __name__ == "__main__":
-    scraper = MutualFundScraper(type_fund="Bond_Funds")
+    scraper = MutualFundScraper(type_fund="Alternative_Funds")
     jdata = scraper.scrape()
     logger.info(f"the jdata is {len(jdata)}")
+    data_list = json.loads(jdata)
+
+    # Create the 'data' directory if it doesn't exist
+    data_directory = 'data'
+    if not os.path.exists(data_directory):
+        os.makedirs(data_directory)
+
+    file_name = "Alternative_Funds_data.json"
+
+    file_path = os.path.join(data_directory, file_name)
+
+    # Write each dict to a new line in the JSON file
+    with open(file_path, 'w') as json_file:
+        for record in data_list:
+            json_file.write(json.dumps(record) + '\n')
+
+    print(f"Data saved to {file_path}")
