@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pandas
+mlflow
+scikit-learn
+joblib
+optuna
+xgboost
+catboost
