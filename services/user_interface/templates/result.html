@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="result">
+        <h2>Your Risk Aversion Estimate:</h2>
+        <p>{{ risk_aversion_estimate }}</p>  <!-- Display the risk aversion estimate passed from the backend -->
+    </div>
+
+    <div class="chat-interface">
+        <div id="chat-box" class="chat-box">
+            <!-- Chat messages will be displayed here -->
+        </div>
+        <input type="text" id="user-input" class="chat-input" placeholder="Type your message...">
+        <button class="send-button" onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById('user-input').value;
+            if (userInput.trim() === "") return;
+
+            // Display user's message in the chat box
+            const chatBox = document.getElementById('chat-box');
+            chatBox.innerHTML += `<div class="user-message"><strong>You:</strong> ${userInput}</div>`;
+
+            // Simulate AI response (replace this with actual AI call)
+            const aiResponse = "This is a response from the AI agent.";  // Replace with actual response logic
+            chatBox.innerHTML += `<div class="ai-message"><strong>AI:</strong> ${aiResponse}</div>`;
+
+            // Clear input
+            document.getElementById('user-input').value = "";
+            chatBox.scrollTop = chatBox.scrollHeight; // Auto scroll to the bottom
+        }
+    </script>
+{% endblock %}
