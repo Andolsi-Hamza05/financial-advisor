@@ -37,11 +37,24 @@ class CommoditiesScraper:
 
 
 if __name__ == "__main__":
-    try:
-        # Example usage:
-        commodity_type = 'WTI'
-        scraper = CommoditiesScraper(commodity_type)
-        data = scraper.scrape()
-        print(data)
-    except Exception as e:
-        print(f"Error: {e}")
+    # Example usage:
+    commodity_type = 'BRENT'
+    scraper = CommoditiesScraper(commodity_type)
+    jdata = scraper.scrape()
+    data_list = json.loads(jdata)
+
+    # Create the 'data' directory if it doesn't exist
+    data_directory = 'data'
+    if not os.path.exists(data_directory):
+        os.makedirs(data_directory)
+
+    file_name = "BRENT_data.json"
+
+    file_path = os.path.join(data_directory, file_name)
+
+    # Write each dict to a new line in the JSON file
+    with open(file_path, 'w') as json_file:
+        for record in data_list:
+            json_file.write(json.dumps(record) + '\n')
+
+    print(f"Data saved to {file_path}")

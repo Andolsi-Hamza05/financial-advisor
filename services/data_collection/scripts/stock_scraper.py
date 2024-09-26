@@ -283,7 +283,6 @@ class YahooScraper(ABC):
 
         df = self.create_dataframe(heavy_data + light_data)
         jdata = df.to_json(orient="records")
-        self.driver.quit()
         return jdata
 
 
@@ -359,8 +358,3 @@ class YahooScraperFactory:
             raise ValueError(f"No scraper available for the specified country: {country} \n"
                              f"Available countries are :{['usa']+BigCountries+MediumCountries+SmallCountries}")
 
-
-if __name__ == "__main__":
-    scraper = YahooScraperFactory.create_scraper('brazil')
-    data = scraper.scrape()
-    print(data)

@@ -161,8 +161,3 @@ class ETFScraper:
         df = self.put_all_scraped_data_in_df(pages)
         df.to_csv(f"data/df_etf_{self.management}.csv")
         self.driver.quit()
-
-
-if __name__ == "__main__":
-    scraper = ETFScraper("passively managed")
-    scraper.scrape()
