@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "risk-aversion-estimator"
+version = "0.1.0"
+description = ""
+authors = ["Andolsi-Hamza05 <hamza.landolsi@essai.ucar.tn>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pandas = "^2.2.3"
+azureml-core = "^1.57.0.post1"
+azureml-mlflow = "^1.57.0.post1"
+mlflow = "^2.16.2"
+scikit-learn = "^1.5.2"
+fastapi = "^0.115.0"
+uvicorn = "^0.30.6"
+ipykernel = "^6.29.5"
+xgboost = "^2.1.1"
+catboost = "^1.2.7"
+optuna = "^4.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
