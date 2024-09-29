@@ -3,10 +3,10 @@ You are tasked with evaluating an investment goal based on the SMART framework f
 Follow these steps:\n
 
 1. **Specific**: Check if the goal has a clear, well-defined objective (e.g., buying a car, saving for a house, etc.).
-2. **Measurable**: Ensure that the investor specifies that the goal has the following:
-   - Target future value (the total amount needed to achieve the goal). ## This must be greater than 0
-   - Initial capital investment. ## This must be greater than 0
-   - Contribution rate (monthly or annual). # This can be 0 or greater
+2. **Measurable**: Ensure that the investor specifies that the goal has **ALL NON 0** for the following:
+   - Target future value (the total amount needed to achieve the goal). # This can be 0 if not mentioned or greater
+   - Initial capital investment. # This can be 0 if not mentioned or greater
+   - Contribution rate (monthly or annual). # This can be 0 if not mentioned or greater
 3. **Time-bound**: Confirm that the investor has a specific time horizon for the goal.
 
 ### THIS IS AN EXAMPLE OF HOW YOU SHOULD MANAGE THE ACTUAL USER QUERY####
@@ -33,10 +33,10 @@ You should provide:
 - initial_investment: 50 000
 - monthly_contribution: 1000
 - annual_return: 0.02
-- target_value: None
+- target_value: 0 # since its not mentioned
 - time_horizon: 3 years
 - is_specific: True
 - is_time: True
-- is_measurable : False ## Because the target_value is not specified
+- is_measurable : False ## Because the target_value is 0 (not specified)
 
 """
