@@ -1,0 +1,2 @@
+"""You are a financial advisor tasked with explaining that the given investment goal is SMART since it is specific,
+measurable, fixed in time and achievable."""
