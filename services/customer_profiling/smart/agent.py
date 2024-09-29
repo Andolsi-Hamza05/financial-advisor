@@ -1,4 +1,5 @@
 from typing import Literal, TypedDict
+import pydantic_core
 from smart.tools import interact_with_llm_and_tools
 from smart.chains import check_smt, achievable, accept, refuse, read_file
 from langchain_openai import AzureChatOpenAI
@@ -6,18 +7,18 @@ from langchain_openai import AzureChatOpenAI
 
 class AgentState(TypedDict):
     query: str
-    goal: str = None
-    initial_investment: float = None
-    monthly_contribution: float = None
-    annual_return: float = None
-    target_value: float = None
-    time_horizon: int = None
-    is_specific: str = None
-    is_measurable: str = None
-    is_time: str = None
-    is_achievable: str = None
-    future_investment_value: float = None
-    final_response: str = None
+    goal: str = ""
+    initial_investment: float = 0
+    monthly_contribution: float = 0
+    annual_return: float = 0
+    target_value: float = 0
+    time_horizon: int = 0
+    is_specific: str = "False"
+    is_measurable: str = "False"
+    is_time: str = "False"
+    is_achievable: str = "False"
+    future_investment_value: float = 0
+    final_response: str = ""
 
 
 class Agent:
@@ -35,19 +36,22 @@ class Agent:
         print(f"check_smt_goal: Current state: {state}")
         check_smt_chain = check_smt(self.llm)
         result = check_smt_chain.invoke({"goal": state['query']})
-        state['goal'] = result.goal
-        state['initial_investment'] = result.initial_investment
-        state['monthly_contribution'] = result.monthly_contribution
-        state['annual_return'] = result.annual_return
-        state['target_value'] = result.target_value
-        state['time_horizon'] = result.time_horizon
-        state['is_specific'] = result.is_specific
-        state['is_measurable'] = result.is_measurable
-        state['is_time'] = result.is_time
-        state['query'] = f"""{state['query']} \n goal: {state['goal']} \n initial_investment: {state['initial_investment']} \n
-        monthly_contribution: {state['monthly_contribution']} \n annual_return: {state['annual_return']} \n target_value: {state['target_value']} \n
-        time_horizon: {state['time_horizon']} \n is_specific: {state['is_specific']} \n is_measurable: {state['is_measurable']} \n
-        is_time: {state['is_time']}"""
+        try:
+            state['goal'] = result.goal
+            state['initial_investment'] = result.initial_investment
+            state['monthly_contribution'] = result.monthly_contribution
+            state['annual_return'] = result.annual_return
+            state['target_value'] = result.target_value
+            state['time_horizon'] = result.time_horizon
+            state['is_specific'] = result.is_specific
+            state['is_measurable'] = result.is_measurable
+            state['is_time'] = result.is_time
+            state['query'] = f"""{state['query']} \n goal: {state['goal']} \n initial_investment: {state['initial_investment']} \n
+            monthly_contribution: {state['monthly_contribution']} \n annual_return: {state['annual_return']} \n target_value: {state['target_value']} \n
+            time_horizon: {state['time_horizon']} \n is_specific: {state['is_specific']} \n is_measurable: {state['is_measurable']} \n
+            is_time: {state['is_time']}"""
+        except pydantic_core._pydantic_core.ValidationError as e:
+            print(f"check_smt_goal error : {e}")
         return state
 
     def check_achievable_goal(self, state: AgentState) -> AgentState:
@@ -86,6 +90,14 @@ class Agent:
     @staticmethod
     def is_smt_goal(state: AgentState) -> Literal["validate_achievability", "not_smart"]:
         print(f"is_smt_goal: Current state: {state}")
+        if state['time_horizon'] == 0:
+            state['is_time'] = "False"
+        if (state['initial_investment'] == 0.0) and (state['monthly_contribution'] == 0.0):
+            state['is_measurable'] = "False"
+        if state['target_value'] == 0.0:
+            state['is_measurable'] = "False"
+        if state['goal'] == "":
+            state['is_specific'] = "False"
         if (state['is_specific'] == "True") and (state['is_time'] == "True") and (state['is_measurable'] == "True"):
             return "validate_achievability"
         else:
