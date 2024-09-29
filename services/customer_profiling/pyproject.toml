@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "customer-profiling"
+version = "0.1.0"
+description = ""
+authors = ["Andolsi-Hamza05 <hamza.landolsi@essai.ucar.tn>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+jupyter = "^1.1.1"
+langchain = "^0.3.1"
+langchain-openai = "^0.2.1"
+langchain-community = "^0.3.1"
+langgraph = "^0.2.28"
+python-dotenv = "^1.0.1"
+fastapi = "^0.115.0"
+uvicorn = "^0.31.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
