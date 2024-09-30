@@ -1,10 +1,9 @@
 from langgraph.graph import StateGraph, END
 from smart.agent import Agent, AgentState
-import logging
 
 
 def set_agentic_workflow():
-    logging.info("Entering set_agentic_workflow")
+    print("Entering set_agentic_workflow")
     agent = Agent()
 
     workflow = StateGraph(AgentState)
@@ -27,20 +26,12 @@ def set_agentic_workflow():
         {"smart": "smart", "not_smart": "not_smart"}
     )
 
-    workflow.add_conditional_edges(
-        "smart",
-        agent.direct_to_respond,
-        {"respond": "respond"}
-    )
+    workflow.add_edge("smart", "respond")
 
-    workflow.add_conditional_edges(
-        "not_smart",
-        agent.direct_to_respond,
-        {"respond": "respond"},
-    )
+    workflow.add_edge("not_smart", "respond")
 
     workflow.add_edge("respond", END)
 
     app = workflow.compile()
-    logging.info("Compiling the workflow and returning the app")
+    print("Compiling the workflow and returning the app")
     return app

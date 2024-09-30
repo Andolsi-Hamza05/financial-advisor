@@ -33,9 +33,9 @@ class Agent:
         )
 
     def check_smt_goal(self, state: AgentState) -> AgentState:
-        print(f"check_smt_goal: Current state: {state}")
         check_smt_chain = check_smt(self.llm)
         result = check_smt_chain.invoke({"goal": state['query']})
+        print(f"check_smt_goal function getting result {result}")
         try:
             state['goal'] = result.goal
             state['initial_investment'] = result.initial_investment
@@ -43,15 +43,21 @@ class Agent:
             state['annual_return'] = result.annual_return
             state['target_value'] = result.target_value
             state['time_horizon'] = result.time_horizon
-            state['is_specific'] = result.is_specific
-            state['is_measurable'] = result.is_measurable
-            state['is_time'] = result.is_time
+            if result.goal != "":
+                state['is_specific'] = "True"
+            if (result.target_value > 0) and ((result.monthly_contribution > 0) or (result.initial_investment > 0)):
+                state['is_measurable'] = "True"
+            if result.time_horizon > 0:
+                state['is_time'] = "True"
             state['query'] = f"""{state['query']} \n goal: {state['goal']} \n initial_investment: {state['initial_investment']} \n
             monthly_contribution: {state['monthly_contribution']} \n annual_return: {state['annual_return']} \n target_value: {state['target_value']} \n
             time_horizon: {state['time_horizon']} \n is_specific: {state['is_specific']} \n is_measurable: {state['is_measurable']} \n
             is_time: {state['is_time']}"""
+
         except pydantic_core._pydantic_core.ValidationError as e:
             print(f"check_smt_goal error : {e}")
+
+        print(f" quiting check_smt_goal: Final state: {state}")
         return state
 
     def check_achievable_goal(self, state: AgentState) -> AgentState:
@@ -69,6 +75,8 @@ class Agent:
         state['future_investment_value'] = result.future_investment_value
         state['query'] = f"""{state['query']} \n is_achievable: {state['is_achievable']} \n
         future_investment_value: {state['future_investment_value']}"""
+
+        print(f"check_achievable_goal: Final state: {state}")
         return state
 
     def accepted(self, state: AgentState) -> AgentState:
@@ -117,5 +125,5 @@ class Agent:
 
     @staticmethod
     def send_final_answer(state: AgentState):
-        print(f"is_achievable_goal: Current state: {state}")
+        print(f"sending final response: Current state: {state}")
         return state

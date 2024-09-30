@@ -1,6 +1,5 @@
 from langchain_core.tools import tool
 from langchain_core.messages import HumanMessage, ToolMessage
-import logging
 
 
 @tool
@@ -38,7 +37,7 @@ TOOL_MAPPING = {"check_achievable": check_achievable}
 
 
 def interact_with_llm_and_tools(human_message: str, llm):
-    logging.info("Entered interact_with_llm_and_tools")
+    print("Entered interact_with_llm_and_tools")
     llm = llm
     llm_with_tools_new = llm.bind_tools(TOOLS)
 
@@ -56,5 +55,5 @@ def interact_with_llm_and_tools(human_message: str, llm):
             messages.append(ToolMessage(tool_output, tool_call_id=tool_call["id"]))
 
     final_response = llm_with_tools_new.invoke(messages)
-    logging.info("getting the final response from interact with llm and tools, exiting the function")
+    print(f"getting the final response {final_response} from interact with llm and tools, exiting the function")
     return final_response

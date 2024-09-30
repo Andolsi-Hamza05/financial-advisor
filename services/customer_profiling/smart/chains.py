@@ -10,7 +10,7 @@ def read_file(file_name):
 
 def check_smt(llm):
     structured_llm_smt_checker = llm.with_structured_output(CheckSpecificMesurableTimebound)
-    smt_template = read_file("accept_system_template")
+    smt_template = read_file("smt_template")
 
     smt_prompt = ChatPromptTemplate.from_messages(
         [("system", smt_template), ("human", "The investor goal :\n\n {goal}")]
@@ -21,9 +21,9 @@ def check_smt(llm):
 
 def achievable(llm):
     structured_llm_achievability_checker = llm.with_structured_output(CheckAchievable)
-    achievable_template = read_file("achievable_template")
+    achievable_template = """Extract the the future investment value and the is_achievable from the query"""
     achievable_prompt = ChatPromptTemplate.from_messages(
-        [("system", achievable_template), ("human", "The investor goal :\n\n {input}")]
+        [("system", achievable_template), ("human", "The query :\n\n {input}")]
     )
     achievable = achievable_prompt | structured_llm_achievability_checker
     return achievable
