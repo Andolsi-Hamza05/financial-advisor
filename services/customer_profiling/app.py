@@ -95,4 +95,18 @@ async def route_request(initial_state: dict):
     return response
 
 
+@router.post("/call_asset_selector")
+async def call_asset_selector():
+    # Here, you can add logic for selecting assets based on user preferences
+    # For example, some algorithm to recommend assets based on the confirmed preferences
+    # Just return a message for now as a placeholder
+    return {"message": "Asset selector called successfully. Investment plan is being generated."}
+
+
+@router.post("/reset_profiling_state")
+async def reset_profiling_state():
+    chat_history['preferences_state'] = False
+    return {"answer": "Profiling state has been reset. Please provide updated preferences."}
+
+
 app.include_router(router)
