@@ -1,45 +1,47 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <h2>Step 1: Fill out the Financial Advisor Form</h2>
-    <form action="/submit" method="POST">  <!-- Updated action to point to the predict route -->
-        <label for="age">Age:</label><br>
-        <input type="number" step="0.1" id="age" name="age" required><br><br>
+    <div class="form-container">
+        <h2>Step 1: Fill out the Financial Advisor Form</h2>
+        <form action="/submit" method="POST">
+            <label for="age">Age:</label><br>
+            <input type="number" step="0.1" id="age" name="age" required><br><br>
 
-        <label for="education">Education:</label><br>
-        <select id="education" name="education" required>
-            <option value="No high school degree">No high school degree</option>
-            <option value="Bachelor degree">Bachelor degree</option>
-            <option value="Master degree">Master degree</option>
-            <option value="PhD">PhD</option>
-        </select><br><br>
+            <label for="education">Education:</label><br>
+            <select id="education" name="education" required>
+                <option value="No high school degree">No high school degree</option>
+                <option value="Bachelor degree">Bachelor degree</option>
+                <option value="Master degree">Master degree</option>
+                <option value="PhD">PhD</option>
+            </select><br><br>
 
-        <label for="occupation">Occupation:</label><br>
-        <select id="occupation" name="occupation" required>
-            <option value="Entrepreneur">Entrepreneur</option>
-            <option value="Managerial">Managerial</option>
-            <option value="Salarial">Salarial</option>
-            <option value="Unemployed">Unemployed</option>
-        </select><br><br>
+            <label for="occupation">Occupation:</label><br>
+            <select id="occupation" name="occupation" required>
+                <option value="Entrepreneur">Entrepreneur</option>
+                <option value="Managerial">Managerial</option>
+                <option value="Salarial">Salarial</option>
+                <option value="Unemployed">Unemployed</option>
+            </select><br><br>
 
-        <label for="kids">Number of Kids:</label><br>
-        <input type="number" step="0.1" id="kids" name="kids" required><br><br>
+            <label for="kids">Number of Kids:</label><br>
+            <input type="number" step="0.1" id="kids" name="kids" required><br><br>
 
-        <label for="income">Annual Income (USD):</label><br>
-        <input type="number" step="0.01" id="income" name="income" required><br><br>
+            <label for="income">Annual Income (USD):</label><br>
+            <input type="number" step="0.01" id="income" name="income" required><br><br>
 
-        <label for="net_worth_income">Net Worth Income (USD):</label><br>
-        <input type="number" step="0.01" id="net_worth_income" name="net_worth_income" required><br><br>
+            <label for="net_worth_income">Net Worth Income (USD):</label><br>
+            <input type="number" step="0.01" id="net_worth_income" name="net_worth_income" required><br><br>
 
-        <label for="risk">Risk Tolerance (1 to 4):</label><br>
-        <input type="range" id="risk" name="risk" min="1" max="4" required><br><br>
+            <label for="risk">Risk Tolerance (1 to 4):</label><br>
+            <input type="range" id="risk" name="risk" min="1" max="4" required><br><br>
 
-        <label>Married:</label><br>
-        <input type="radio" id="married_yes" name="married" value="1" required>
-        <label for="married_yes">Yes</label><br>
-        <input type="radio" id="married_no" name="married" value="0" required>
-        <label for="married_no">No</label><br><br>
+            <label>Married:</label><br>
+            <input type="radio" id="married_yes" name="married" value="1" required>
+            <label for="married_yes">Yes</label><br>
+            <input type="radio" id="married_no" name="married" value="0" required>
+            <label for="married_no">No</label><br><br>
 
-        <input type="submit" value="Submit">
-    </form>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 {% endblock %}
