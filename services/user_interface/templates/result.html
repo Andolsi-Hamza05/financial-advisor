@@ -1,35 +1,110 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <div class="result">
+    <div class="result-container">
         <h2>Your Risk Aversion Estimate:</h2>
-        <p>{{ risk_aversion_estimate }}</p>  <!-- Display the risk aversion estimate passed from the backend -->
+        <p>{{ risk_aversion_estimate }}</p>
     </div>
 
     <div class="chat-interface">
         <div id="chat-box" class="chat-box">
             <!-- Chat messages will be displayed here -->
+            <div class="ai-message"><strong>AI:</strong> {{ ai_message }}</div>
         </div>
-        <input type="text" id="user-input" class="chat-input" placeholder="Type your message...">
-        <button class="send-button" onclick="sendMessage()">Send</button>
+
+        <div class="chat-controls">
+            <input type="text" id="user-input" class="chat-input" placeholder="Type your message...">
+            <button class="send-button" onclick="sendMessage()">Send</button>
+        </div>
     </div>
 
     <script>
-        function sendMessage() {
+        async function sendMessage() {
             const userInput = document.getElementById('user-input').value;
             if (userInput.trim() === "") return;
 
-            // Display user's message in the chat box
             const chatBox = document.getElementById('chat-box');
             chatBox.innerHTML += `<div class="user-message"><strong>You:</strong> ${userInput}</div>`;
 
-            // Simulate AI response (replace this with actual AI call)
-            const aiResponse = "This is a response from the AI agent.";  // Replace with actual response logic
-            chatBox.innerHTML += `<div class="ai-message"><strong>AI:</strong> ${aiResponse}</div>`;
+            const payload = {
+                "message": userInput
+            };
 
-            // Clear input
+            try {
+                const response = await fetch('/check_smart', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const aiResponse = data.answer || "No response from AI.";
+                    chatBox.innerHTML += `<div class="ai-message"><strong>AI:</strong> ${aiResponse}</div>`;
+
+                    // Check if the AI response contains "confirm these preferences"
+                    if (aiResponse.toLowerCase().includes("confirm these preferences")) {
+                        displayConfirmModifyButtons();
+                    }
+                } else {
+                    chatBox.innerHTML += `<div class="ai-message"><strong>AI:</strong> Error in fetching response.</div>`;
+                }
+            } catch (error) {
+                chatBox.innerHTML += `<div class="ai-message"><strong>AI:</strong> Error: ${error.message}</div>`;
+            }
+
             document.getElementById('user-input').value = "";
-            chatBox.scrollTop = chatBox.scrollHeight; // Auto scroll to the bottom
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Function to dynamically add Confirm and Modify buttons
+        function displayConfirmModifyButtons() {
+            const chatBox = document.getElementById('chat-box');
+
+            // Create the button container
+            const buttonContainer = document.createElement('div');
+            buttonContainer.classList.add('button-container');
+            buttonContainer.innerHTML = `
+                <button id="confirm-btn" class="send-button">Confirm</button>
+                <button id="modify-btn" class="send-button">Modify</button>
+            `;
+            chatBox.appendChild(buttonContainer);
+
+            // Add event listeners for the buttons
+            document.getElementById("confirm-btn").addEventListener("click", async function() {
+                try {
+                    const response = await fetch("/confirm_preferences", {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ action: "confirm" })
+                    });
+                    const data = await response.json();
+
+                    // Check if the confirmation was successful
+                    if (data.message === "Your preferences have been confirmed.") {
+                        // Redirect to the waiting page
+                        window.location.href = "/waiting";
+                    } else {
+                        chatBox.innerHTML += `<div class="ai-message"><strong>AI:</strong> ${data.message}</div>`;
+                    }
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            });
+
+            document.getElementById("modify-btn").addEventListener("click", function() {
+                // Remove the buttons
+                buttonContainer.remove();
+
+                // Append AI message asking for new preferences
+                const modifyMessage = "What investment preferences do you want to include? Please provide all your specific investment preferences.";
+                chatBox.innerHTML += `<div class="ai-message"><strong>AI:</strong> ${modifyMessage}</div>`;
+
+                // Scroll to the bottom
+                chatBox.scrollTop = chatBox.scrollHeight;
+            });
         }
     </script>
 {% endblock %}
+

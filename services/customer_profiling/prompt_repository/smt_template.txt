@@ -1,0 +1,67 @@
+"""
+You are tasked with evaluating an investment goal based on the SMART framework focusing only on these criteria(Specific, Measurable, Time-bound). \n
+Follow these steps:\n
+
+1. **Specific**: Check if the goal has a clear, well-defined objective (e.g., buying a car, saving for a house, etc.). 
+
+## YOUR FIRST TASK: If you can explicitly see the goal of investor extract it as goal and assign True to is_specific
+## If the investor didn't specified anything to do with the investment assign False to is_specific. 
+2. **Measurable**: Ensure that the investor specifies that the goal has the following:
+   - target_value: (the total amount needed to achieve the goal). # This can be 0 if not mentioned or greater
+   - initial_investment: # This can be 0 if not mentioned or greater
+   - monthly_contribution: This is the amount of money that the investor is willing to invest periodically(ensure you transform the period to month(example lets assume r is annualy contribution: monthly_contribution=r/12)). # This can be 0 if not mentioned or greater
+   
+## YOUR SECOND TASK: If the investor don't mention the target_value, assign False to is_measurable.
+## If the investor doesnt include at least one from the initial_investment or monthly_contribution assign False to is_measurable
+## ELSE ASSIGN TRUE : meaning we have extracted target_value (>0) and at least one of the (initial_investment/monthly_contribution) is greater than 0!
+3. **Time-bound**: Confirm that the investor has a specific time horizon for the goal.
+
+## YOUR THIRD TASK: If the time horizon is clearly specified extratc it as time_horizon and assign True to is_time.
+## ELSE assign False to is_time
+
+--------------------------------------------------------------------------------------------------------------------------
+
+### THIS IS AN EXAMPLE OF HOW YOU SHOULD MANAGE THE ACTUAL USER QUERY####
+Investment Goal Example: 
+"I want to buy a car worth $10,000 in 3 years. I currently have $6,000 and plan to invest $300 every month. My risk aversion coefficient is 1.2, so I expect an annual return of 2%."
+
+You should provide:
+- goal: "buy a car"
+- initial_investment: 6000
+- monthly_contribution: 300
+- annual_return: 0.02 
+- target_value: 10 000
+- time_horizon: 3
+- is_specific: True
+- is_time: True
+- is_measurable : True
+
+### THIS IS ANOTHER EXAMPLE OF HOW YOU SHOULD MANAGE THE ACTUAL USER QUERY####
+Investment Goal Example: 
+"I want to accumulate money for retirement in 10 years. I currently have $50,000 and plan to invest $1000 annually. so I expect an annual return of 4%."
+
+You should provide:
+- goal: retirement
+- initial_investment: 50000
+- monthly_contribution: 1000
+- annual_return: 0.04
+- target_value: 0 # since its not mentioned
+- time_horizon: 3
+- is_specific: True
+- is_time: True
+- is_measurable : False # Because the target_value is 0 (not specified)
+
+### THIS IS ANOTHER EXAMPLE OF HOW YOU SHOULD MANAGE THE ACTUAL USER QUERY####
+"i want to invest in buying a house worth 1 000 000$! I have already 800 000$ and i am willing to invest monthly 1 000$!"
+
+You should provide:
+- goal: "buy a house"
+- initial_investment: 800000
+- monthly_contribution: 1000
+- annual_return: (keep the default param)
+- target_value: 1000000
+- time_horizon: 3
+- is_specific: True
+- is_time: False # because he didn't specify the time horizon
+- is_measurable : True
+"""
