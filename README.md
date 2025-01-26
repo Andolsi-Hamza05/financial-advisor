@@ -1,37 +1,64 @@
-# Financial Advisor
+# Financial Advisor Application
 
-The **Financial Advisor** application is designed to help investors construct their portfolios based on their preferences, market trends, and asset analysis. First, the AI agent interacts with customers to perform `customer profiling` and understand their preferences. It send data to deployed machine learning model to get estimation of the `risk aversion(tolerance) coefficient`. Then based on natural language prompts it chooses assets from the asset data available in the database. For maintaining our database up to date and representing the actual market state and asset related information, we designed a near real world pipeline : `data collection` microserivce that collects real-time data from financial data sources, we ensure only new data is processed by the `feature selection` engine, we compute some important metrics do som data validation checks to get the final gold layer. Finally, the chosen assets and the relevant information of the investor such as risk aversion coefficient are sent to `portfolio optimization` microservice to provide an optimal portfolio and write a detailed reports explaining the choices and some useful visualizations via a friendly `User Interface`.
+## Overview
 
----
+The Financial Advisor application is designed to assist investors in constructing optimal portfolios based on their preferences, market trends, and asset analysis. The application leverages AI and machine learning to provide personalized investment advice. Below is a detailed guide on how the application works and the steps involved in creating a tailored investment portfolio.
 
-### Prerequisites
+## Key Features
 
-Make sure you have the following installed on your system:
+1. **Customer Profiling**: The AI agent interacts with users to gather essential information and understand their investment preferences.
+2. **Risk Aversion Estimation**: A machine learning model estimates the user's risk aversion coefficient based on the collected data.
+3. **Asset Selection**: The AI selects suitable assets from a database using natural language prompts.
+4. **Real-Time Data Processing**: A data collection microservice ensures the database is updated with real-time financial data.
+5. **Portfolio Optimization**: The chosen assets and user information are sent to a portfolio optimization microservice to generate an optimal portfolio.
+6. **Detailed Reports and Visualizations**: The application provides detailed reports and visualizations to help users understand the investment choices.
 
-- [Minikube](https://minikube.sigs.k8s.io/docs/start/)
-- [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-- [Docker](https://docs.docker.com/get-docker/)
-- [Azure subscription](https://azure.com/)
+## Step-by-Step Guide
 
-## Deploying the data collection, kafka and feature selection into AKS cluster:
+### Step 1: Customer Profiling
 
-To deploy this project into your azure kubernetes cluster, you can simply provision your aks cluster from azure portal, configure the kubectl to point to your newly created cluster. Ensure you create a managed identity and pass the related secrets in the entrypoint bash script where I put `****` (You can also adjust the kubernetes manifests or the strimzi custom resource deployments) then run the following:
+The first step involves gathering essential information from the user to create a customer profile. This includes:
 
-```bash
-bash infrastructure/aks/entrypoint.sh
-```
+- **Age**
+- **Education Level**
+- **Occupation**
+- **Number of Kids**
+- **Annual Income**
+- **Net Worth**
+- **Risk Tolerance (1 to 4)**
+- **Marital Status**
 
+![Form](form.png)
 
-Once you finished testing your cluster and see the data collected successfully and sent to kafka and consumed and processed to the final destination, you can terminate all what you created inside your cluster by running :
+### Step 2: Risk Aversion Estimation
 
-```bash
-bash infrastructure/aks/terminate.sh
-```
+Based on the customer profile, the AI agent estimates the user's risk aversion coefficient. This coefficient is crucial for determining the appropriate investment strategy.
 
-## Deploying the data collection, kafka and feature selection into local minikube cluster:
-Alternatively, if you want to test the setup locally you can try running :
+![Risk Aversion Estimate](images/step2.png)
 
-```bash
-bash infrastructure/minikube/kafka/kafka-setup.sh
-```
-Then you can apply the data collection and feature selection manifests inside the `infrastructure/minikube/` directory then pick some endpoint triggers (cronjobs to trigger the data collection endpoints) for your testing purposes. Ensure you're not runing out of memory or CPUs or any other constraints/limits locally.
+### Step 3: Defining Financial Goals
+
+Users are encouraged to define their financial goals and specify any preferences they have. This step is crucial for creating a portfolio that aligns with the user's objectives.
+
+![Smart Financial Goals](images/smart.png)
+
+### Step 4: Ethical Preferences
+
+Users can specify ethical preferences for their investments, such as investing in healthcare companies or avoiding companies that exploit children or harm nature.
+
+![Ethical Preferences](images/preferences.png)
+
+### Step 5: Portfolio Optimization
+
+The AI agent uses the collected data to select suitable assets from the database. The portfolio optimization microservice then generates an optimal portfolio based on the user's risk aversion coefficient and preferences.
+
+### Step 6: Detailed Reports and Visualizations
+
+The application provides detailed reports and visualizations to help users understand the investment choices and the rationale behind them.
+
+## Data Processing Pipeline
+
+1. **Data Collection**: A microservice collects real-time financial data from various sources.
+2. **Feature Selection**: The system ensures only new data is processed by the feature selection engine.
+3. **Metrics Computation**: Important metrics are computed, and data validation checks are performed.
+4. **Gold Layer**: The final processed data is stored in the gold layer for use in portfolio optimization.
