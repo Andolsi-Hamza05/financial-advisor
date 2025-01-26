@@ -13,6 +13,15 @@ The Financial Advisor application is designed to assist investors in constructin
 5. **Portfolio Optimization**: The chosen assets and user information are sent to a portfolio optimization microservice to generate an optimal portfolio.
 6. **Detailed Reports and Visualizations**: The application provides detailed reports and visualizations to help users understand the investment choices.
 
+
+## Data Processing Pipeline
+
+1. **Data Collection**: A microservice collects real-time financial data from various sources.
+2. **Feature Selection**: The system ensures only new data is processed by the feature selection engine.
+3. **Metrics Computation**: Important metrics are computed, and data validation checks are performed.
+4. **Gold Layer**: The final processed data is stored in the gold layer for use in portfolio optimization.
+
+
 ## Step-by-Step Guide
 
 ### Step 1: Customer Profiling
@@ -28,13 +37,13 @@ The first step involves gathering essential information from the user to create 
 - **Risk Tolerance (1 to 4)**
 - **Marital Status**
 
-![Form](form.png)
+![Form](images/form.png)
 
 ### Step 2: Risk Aversion Estimation
 
 Based on the customer profile, the AI agent estimates the user's risk aversion coefficient. This coefficient is crucial for determining the appropriate investment strategy.
 
-![Risk Aversion Estimate](images/step2.png)
+![Risk Aversion Estimate](images/step 2.png)
 
 ### Step 3: Defining Financial Goals
 
@@ -52,13 +61,10 @@ Users can specify ethical preferences for their investments, such as investing i
 
 The AI agent uses the collected data to select suitable assets from the database. The portfolio optimization microservice then generates an optimal portfolio based on the user's risk aversion coefficient and preferences.
 
+
 ### Step 6: Detailed Reports and Visualizations
 
 The application provides detailed reports and visualizations to help users understand the investment choices and the rationale behind them.
 
-## Data Processing Pipeline
+![Final portfolio](images/types.png)
 
-1. **Data Collection**: A microservice collects real-time financial data from various sources.
-2. **Feature Selection**: The system ensures only new data is processed by the feature selection engine.
-3. **Metrics Computation**: Important metrics are computed, and data validation checks are performed.
-4. **Gold Layer**: The final processed data is stored in the gold layer for use in portfolio optimization.
