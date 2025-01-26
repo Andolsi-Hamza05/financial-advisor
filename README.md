@@ -43,7 +43,7 @@ The first step involves gathering essential information from the user to create 
 
 Based on the customer profile, the AI agent estimates the user's risk aversion coefficient. This coefficient is crucial for determining the appropriate investment strategy.
 
-![Risk Aversion Estimate](images/step 2.png)
+![Risk Aversion Estimate](images/step2.png)
 
 ### Step 3: Defining Financial Goals
 
