@@ -66,5 +66,5 @@ The AI agent uses the collected data to select suitable assets from the database
 
 The application provides detailed reports and visualizations to help users understand the investment choices and the rationale behind them.
 
-![Final portfolio](images/types.png)
+![Final portfolio](images/types.PNG)
 
